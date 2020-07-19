@@ -1,0 +1,136 @@
+<div class="wrapper fadeInDown" style="height: 100vh;" *ngIf="!_loadingStatus">
+  <div id="formContent" class="pt-5" style="max-width: 800px;">
+    <div class="fadeIn first">
+      <h3 class="text-center">Sign Up</h3>
+    </div>
+    <div class="alert alert-danger" *ngIf="errorOccured">
+      {{ errorMessage }}
+    </div>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+      <div class="w-100">
+        <div class="w-50 d-inline-block m-0">
+          <input
+            type="text"
+            id="name"
+            class="fadeIn input second"
+            name="name"
+            placeholder="Name"
+            required
+            ngModel
+          />
+        </div>
+        <div class="w-50 d-inline-block m-0">
+          <input
+            type="email"
+            id="email"
+            class="fadeIn input second"
+            name="email"
+            placeholder="Email"
+            required
+            ngModel
+            email
+          />
+        </div>
+      </div>
+      <div class="w-100">
+        <div class="w-50 d-inline-block m-0">
+          <input
+            type="password"
+            id="password"
+            class="fadeIn input third"
+            name="password"
+            placeholder="Password"
+            required
+            minlength="6"
+            ngModel
+          />
+        </div>
+        <div class="w-50 d-inline-block m-0">
+          <input
+            type="number"
+            id="cnic"
+            class="fadeIn input third"
+            name="cnic"
+            placeholder="CNIC"
+            minlength="13"
+            maxlength="13"
+            required
+            ngModel
+          />
+        </div>
+      </div>
+      <div class="w-100">
+        <div class="w-50 d-inline-block m-0">
+          <input
+            type="tel"
+            id="phone_number"
+            class="fadeIn input third"
+            name="phone_number"
+            placeholder="Phone Number"
+            required
+            minlength="11"
+            maxlength="11"
+            ngModel
+          />
+        </div>
+        <div class="w-50 d-inline-block m-0">
+          <input
+            type="text"
+            id="location"
+            class="fadeIn input third"
+            name="location"
+            placeholder="Location"
+            required
+            ngModel
+          />
+        </div>
+      </div>
+      <div class="w-100 text-center mt-3">
+        <div class="w-50 d-inline-block">
+          <div class="w-100">
+            <h5>Select User Role</h5>
+          </div>
+          <div class="w-100">
+            <div class="w-50 d-inline-block m-0">
+              <input
+                type="radio"
+                id="hallmanager"
+                class="fadeIn third"
+                name="role"
+                value="hall_manager"
+                required
+                ngModel
+              />
+              <label for="hallmanager">Hall Manager</label>
+            </div>
+            <div class="w-50 d-inline-block m-0">
+              <input
+                type="radio"
+                id="customer"
+                class="fadeIn third"
+                name="role"
+                value="customer"
+                required
+                ngModel
+              />
+              <label for="customer">Customer</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <input
+        type="submit"
+        class="fadeIn fourth"
+        value="Register"
+        [disabled]="f.invalid"
+      />
+    </form>
+    <div id="formFooter">
+      Don't have a account?
+      <a class="underlineHover" [routerLink]="'/sign-in'">SignIn</a>.
+    </div>
+  </div>
+</div>
+<div style="height: 100vh;" *ngIf="_loadingStatus">
+  <app-loading-spinner></app-loading-spinner>
+</div>

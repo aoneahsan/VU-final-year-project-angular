@@ -1,0 +1,68 @@
+<ng-container *ngIf="!_loadingStatus">
+  <app-header></app-header>
+  <div class="container py-4">
+    <div class="list-group" *ngIf="currentUserData">
+      <div class="list-group-item list-group-item-action active">
+        <div class="row">
+          <div class="col-3"><strong>User Profile Detail</strong></div>
+          <div class="col-9 pl-4 text-right">
+            <button class="btn btn-info btn-sm">Edit</button>
+            <button
+              class="btn btn-danger btn-sm ml-3"
+              (click)="onDeleteAccount()"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="list-group-item list-group-item-action col-12">
+        <div class="row">
+          <div class="col-3 border-right"><strong>Name</strong></div>
+          <div class="col-9 pl-4">{{ currentUserData.name }}</div>
+        </div>
+      </div>
+      <div class="list-group-item list-group-item-action col-12">
+        <div class="row">
+          <div class="col-3 border-right"><strong>Email</strong></div>
+          <div class="col-9 pl-4">{{ currentUserData.email }}</div>
+        </div>
+      </div>
+      <div class="list-group-item list-group-item-action col-12">
+        <div class="row">
+          <div class="col-3 border-right"><strong>Phone Number</strong></div>
+          <div class="col-9 pl-4">{{ currentUserData.phone_number }}</div>
+        </div>
+      </div>
+      <div class="list-group-item list-group-item-action col-12">
+        <div class="row">
+          <div class="col-3 border-right"><strong>Location</strong></div>
+          <div class="col-9 pl-4">{{ currentUserData.location }}</div>
+        </div>
+      </div>
+      <div class="list-group-item list-group-item-action col-12">
+        <div class="row">
+          <div class="col-3 border-right"><strong>CNIC</strong></div>
+          <div class="col-9 pl-4">{{ currentUserData.cnic }}</div>
+        </div>
+      </div>
+      <div class="list-group-item list-group-item-action col-12">
+        <div class="row">
+          <div class="col-3 border-right"><strong>Profile Image</strong></div>
+          <div class="col-9 pl-4">
+            <img
+              [src]="currentUserData.profile_image"
+              class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
+              [alt]="currentUserData.name"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-loading-spinner *ngIf="!currentUserData"></app-loading-spinner>
+  </div>
+  <app-footer></app-footer>
+</ng-container>
+<div style="height: 100vh;" *ngIf="_loadingStatus">
+  <app-loading-spinner></app-loading-spinner>
+</div>

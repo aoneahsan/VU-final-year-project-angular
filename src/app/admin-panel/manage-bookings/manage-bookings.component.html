@@ -1,0 +1,48 @@
+<ng-container *ngIf="!_loadingStatus">
+  <app-header></app-header>
+  <div class="container py-4 table-responsive">
+    <table
+      class="table table-striped table-hover table-inverse"
+      *ngIf="bookings"
+    >
+      <thead class="thead-inverse">
+        <tr>
+          <th>ID</th>
+          <th>User Name</th>
+          <th>Hall Name</th>
+          <th>Event Type</th>
+          <th># of Persons</th>
+          <th>Booking Time</th>
+          <th>Menu</th>
+          <th>Price</th>
+          <th colspan="2" class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let booking of bookings; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ booking.user.name }}</td>
+          <td>{{ booking.hall.name }}</td>
+          <td>{{ booking.event_type }}</td>
+          <td>{{ booking.no_of_persons }}</td>
+          <td>{{ booking.booking_time }}</td>
+          <td>{{ booking.menu }}</td>
+          <td>{{ booking.price | currency }}</td>
+          <td>
+            <button class="btn btn-outline-warning btn-sm">edit</button>
+          </td>
+          <td>
+            <button class="btn btn-outline-danger btn-sm">delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-container *ngIf="!bookings">
+      <h3 class="text-center">No Bookings Found.</h3>
+    </ng-container>
+  </div>
+  <app-footer></app-footer>
+</ng-container>
+<div style="height: 100vh;" *ngIf="_loadingStatus">
+  <app-loading-spinner></app-loading-spinner>
+</div>

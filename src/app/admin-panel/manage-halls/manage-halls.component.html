@@ -1,0 +1,50 @@
+<ng-container *ngIf="!_loadingStatus">
+  <app-header></app-header>
+  <div class="container py-4 table-responsive">
+    <table
+      class="table table-striped table-hover table-inverse"
+      *ngIf="availableHalls"
+    >
+      <thead class="thead-inverse">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Location</th>
+          <th>Min # of Persons</th>
+          <th>Event Type</th>
+          <th>Hall Rent</th>
+          <th>Hall Size</th>
+          <th>Is Available</th>
+          <th colspan="2" class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let hall of availableHalls; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ hall.name }}</td>
+          <td>{{ hall.description }}</td>
+          <td>{{ hall.location }}</td>
+          <td>{{ hall.min_no_of_persons }}</td>
+          <td>{{ hall.event_type }}</td>
+          <td>{{ hall.hall_rent }}</td>
+          <td>{{ hall.hall_size }}</td>
+          <td>{{ hall.is_available ? 'Available' : 'Not Available' }}</td>
+          <td>
+            <button class="btn btn-outline-warning btn-sm">edit</button>
+          </td>
+          <td>
+            <button class="btn btn-outline-danger btn-sm">delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-container *ngIf="!availableHalls">
+      <h3 class="text-center">No Halls Found.</h3>
+    </ng-container>
+  </div>
+  <app-footer></app-footer>
+</ng-container>
+<div style="height: 100vh;" *ngIf="_loadingStatus">
+  <app-loading-spinner></app-loading-spinner>
+</div>
