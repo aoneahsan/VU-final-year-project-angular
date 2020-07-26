@@ -18,7 +18,8 @@ export class AuthService {
     private _user = new BehaviorSubject<User>(null);
     private _tokkenExpirationTime: any = null;
 
-    private _userRole = new BehaviorSubject<'admin' | 'hall_manager' | 'customer'>(null);
+    private _userID;
+    private _userRole: 'admin' | 'hall_manager' | 'customer';
 
     constructor(
         private _router: Router,
@@ -32,6 +33,10 @@ export class AuthService {
 
     setCurrentUserData(data) {
         this._user.next(data);
+    }
+
+    getUserID() {
+        return this._userID;
     }
 
     getUserRole() {
@@ -114,7 +119,8 @@ export class AuthService {
                 new Date(userData.tokken_expire_time)
             );
             this._user.next(localUser);
-            this._userRole.next(localUser.role);
+            this._userID = localUser.id;
+            this._userRole = localUser.role;
             this.checkLoginStatus();
         } else {
             console.log("User Data not Found");
@@ -165,7 +171,8 @@ export class AuthService {
             expireDate
         );
         this._user.next(newUser);
-        this._userRole.next(newUser.role);
+        this._userID = response.id;
+        this._userRole = response.role;
         localStorage.setItem('user_data', JSON.stringify(newUser));
     }
 }

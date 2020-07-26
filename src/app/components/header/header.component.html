@@ -26,6 +26,24 @@
               Home
             </a>
           </li>
+        </ng-container>
+        <ng-container
+          *ngIf="userRole == 'hall_manager'"
+        >
+          <li class="nav-item">
+            <a class="nav-link" rrouterLinkActive="active" routerLink="/halls">
+              Manage Halls
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" rrouterLinkActive="active" routerLink="/halls/create">
+              Create Hall
+            </a>
+          </li>
+        </ng-container>
+        <ng-container
+          *ngIf="userRole == 'customer'"
+        >
           <li class="nav-item">
             <a class="nav-link" rrouterLinkActive="active" routerLink="/search-halls">
               Search Halls

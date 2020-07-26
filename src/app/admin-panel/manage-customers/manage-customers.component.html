@@ -13,8 +13,9 @@
           <th>Location</th>
           <th>Phone #</th>
           <th>CNIC</th>
+          <th>User Role</th>
           <th class="text-center">Profile Pic</th>
-          <th colspan="3" class="text-center">Actions</th>
+          <th colspan="2" class="text-center">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -25,6 +26,7 @@
           <td>{{ customer.location }}</td>
           <td>{{ customer.phone_number }}</td>
           <td>{{ customer.cnic }}</td>
+          <td>{{ customer.role }}</td>
           <td class="text-center">
             <img
               [src]="customer.profile_image"
@@ -32,9 +34,8 @@
               [alt]="customer.name"
             />
           </td>
-          <td><button class="btn btn-outline-primary btn-sm">view</button></td>
-          <td><button class="btn btn-outline-warning btn-sm">edit</button></td>
-          <td><button class="btn btn-outline-danger btn-sm">delete</button></td>
+          <td><button class="btn btn-outline-warning btn-sm" (click)="onEdit(customer)">edit</button></td>
+          <td><button class="btn btn-outline-danger btn-sm" (click)="onDelete(customer)">delete</button></td>
         </tr>
       </tbody>
     </table>

@@ -22,6 +22,9 @@ import { DashboardComponent } from './admin-panel/dashboard/dashboard.component'
 import { ManageBookingsComponent } from './admin-panel/manage-bookings/manage-bookings.component';
 import { SimpleAuthGuard } from './route-guards/auth/simple-auth-guard.service';
 import { BookingsComponent } from './components/bookings/bookings.component';
+import { HallManagerGuard } from './route-guards/hall-manager/hall-manager.service';
+import { CustomerGuard } from './route-guards/customer/customer.service';
+import { EditHallComponent } from './components/halls/edit-hall/edit-hall.component';
 
 const routes: Routes = [
   {
@@ -47,32 +50,27 @@ const routes: Routes = [
   {
     path: 'halls',
     component: HallsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [HallManagerGuard]
   },
   {
     path: 'halls/create',
     component: CreateHallComponent,
-    canActivate: [AuthGuard]
+    canActivate: [HallManagerGuard]
   },
   {
     path: 'halls/:id/edit',
-    component: CreateHallComponent,
-    canActivate: [AuthGuard]
+    component: EditHallComponent,
+    canActivate: [HallManagerGuard]
   },
   {
     path: 'bookings',
     component: BookingsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [CustomerGuard]
   },
   {
     path: 'bookings/create',
     component: CreateBookingComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'bookings/:id/edit',
-    component: CreateBookingComponent,
-    canActivate: [AuthGuard]
+    canActivate: [CustomerGuard]
   },
   {
     path: 'user/profile',
@@ -81,7 +79,8 @@ const routes: Routes = [
   },
   {
     path: 'search-halls',
-    component: SearchHallComponent
+    component: SearchHallComponent,
+    canActivate: [CustomerGuard]
   },
   {
     path: 'admin/dashboard',

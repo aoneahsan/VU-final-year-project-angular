@@ -5,5 +5,6 @@ export interface UserProfileInterface {
     phone_number,
     location,
     cnic,
-    profile_image
+    profile_image,
+    role?
 }

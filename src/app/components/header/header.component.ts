@@ -15,14 +15,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private _authService: AuthService) { }
 
   ngOnInit(): void {
-    this.userRole_Sub = this._authService.getUserRole().subscribe(
-      role => {
-        console.log("Current Role = ", this.userRole, role);
-        if (role) {
-          this.userRole = role;
-        }
-      }
-    );
+    this.userRole = this._authService.getUserRole();
   }
 
   logout() {
@@ -30,8 +23,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.userRole_Sub) {
-      this.userRole_Sub.unsubscribe();
-    }
   }
 }
