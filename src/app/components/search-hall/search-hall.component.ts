@@ -45,20 +45,38 @@ export class SearchHallComponent implements OnInit, OnDestroy {
           if (params.has('name')) {
             formData.set('name', params.get('name'));
           }
+          else {
+            formData.set('name', '');
+          }
           if (params.has('minprice')) {
             formData.set('minprice', params.get('minprice'));
+          }
+          else {
+            formData.set('minprice', '0');
           }
           if (params.has('maxprice')) {
             formData.set('maxprice', params.get('maxprice'));
           }
+          else {
+            formData.set('maxprice', '100000000000');
+          }
           if (params.has('location')) {
             formData.set('location', params.get('location'));
+          }
+          else {
+            formData.set('location', '');
           }
           if (params.has('event_type')) {
             formData.set('event_type', params.get('event_type'));
           }
+          else {
+            formData.set('event_type', '');
+          }
           if (params.has('min_no_of_persons')) {
             formData.set('min_no_of_persons', params.get('min_no_of_persons'));
+          }
+          else {
+            formData.set('min_no_of_persons', '0');
           }
           this.getHalls(formData);
         } else {
@@ -76,10 +94,12 @@ export class SearchHallComponent implements OnInit, OnDestroy {
         this._systemService.loadingPageDataFalse();
         console.log("SearchHallComponent == getUserBookings == res = ", res);
         this.halls = res.data;
+        data = null;
       },
       err => {
         this._systemService.loadingPageDataFalse();
         console.log("SearchHallComponent == getUserBookings == err = ", err);
+        data = null;
       }
     );
   }
@@ -99,6 +119,8 @@ export class SearchHallComponent implements OnInit, OnDestroy {
         },
         queryParamsHandling: 'merge'
       });
+
+      data = null;
   }
 
   ngOnDestroy(): void {

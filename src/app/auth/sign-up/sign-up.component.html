@@ -1,5 +1,5 @@
-<div class="wrapper fadeInDown" style="height: 100vh;" *ngIf="!_loadingStatus">
-  <div id="formContent" class="pt-5" style="max-width: 800px;">
+<div class="wrapper fadeInDown" style="height: 100vh" *ngIf="!_loadingStatus">
+  <div id="formContent" class="pt-5" style="max-width: 800px">
     <div class="fadeIn first">
       <h3 class="text-center">Sign Up</h3>
     </div>
@@ -85,7 +85,7 @@
           />
         </div>
       </div>
-      <div class="w-100 text-center mt-3">
+      <div class="w-100 text-center mt-3 mb-4">
         <div class="w-50 d-inline-block">
           <div class="w-100">
             <h5>Select User Role</h5>
@@ -117,12 +117,22 @@
             </div>
           </div>
         </div>
+        <div class="w-50 d-inline-block">
+          <div class="w-100">
+            <h5>Profile Pic</h5>
+          </div>
+          <div class="w-100">
+            <div class="w-50 d-inline-block m-0">
+              <input type="file" />
+            </div>
+          </div>
+        </div>
       </div>
       <input
         type="submit"
         class="fadeIn fourth"
         value="Register"
-        [disabled]="f.invalid"
+        [disabled]="f.invalid || !fileSelected"
       />
     </form>
     <div id="formFooter">
@@ -131,6 +141,6 @@
     </div>
   </div>
 </div>
-<div style="height: 100vh;" *ngIf="_loadingStatus">
+<div style="height: 100vh" *ngIf="_loadingStatus">
   <app-loading-spinner></app-loading-spinner>
 </div>

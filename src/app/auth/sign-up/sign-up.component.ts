@@ -19,6 +19,9 @@ export class SignUpComponent implements OnInit {
   errorMessage: string;
   errors: any;
 
+  file;
+  fileSelected: boolean = false;
+
   constructor(private _systemService: SystemService, private _authService: AuthService) { }
 
   ngOnInit(): void {
