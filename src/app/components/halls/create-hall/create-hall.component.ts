@@ -4,6 +4,7 @@ import { SystemService } from 'src/app/services/system.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { NgForm } from '@angular/forms';
 import { HallManagerService } from 'src/app/services/hall-manager/hall-manager.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-hall',
@@ -25,6 +26,7 @@ export class CreateHallComponent implements OnInit, OnDestroy {
     private _systemService: SystemService,
     private _authService: AuthService,
     private _hallManagerService: HallManagerService,
+    private _router: Router
     ) { }
 
   ngOnInit(): void {
@@ -42,7 +44,11 @@ export class CreateHallComponent implements OnInit, OnDestroy {
       // console.log("onSubmit() data = ", form.value);
       this.formSubmitSub = this._hallManagerService.createHall(form.value).subscribe(
         res => {
-          console.log("CreateHallComponent == ")
+          console.log("CreateHallComponent == onSubmit == res = ", res);
+          this._router.navigate(['/halls']);
+        },
+        err => {
+          console.log("CreateHallComponent == onSubmit == err = ", err);
         }
       );
     }

@@ -151,11 +151,13 @@
           <button
             type="submit"
             class="btn btn-primary"
-            [disabled]="!form.valid"
+            [disabled]="!form.valid && formSubmited"
             (click)="onSubmit(form)"
+            *ngIf="!formSubmited"
           >
             Submit
           </button>
+          <app-loading-spinner *ngIf="formSubmited"></app-loading-spinner>
         </div>
       </div>
     </form>

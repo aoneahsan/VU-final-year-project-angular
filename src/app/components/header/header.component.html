@@ -27,58 +27,99 @@
             </a>
           </li>
         </ng-container>
-        <ng-container
-          *ngIf="userRole == 'hall_manager'"
-        >
+        <!-- Hall Managers Menu -->
+        <ng-container *ngIf="userRole == 'hall_manager'">
           <li class="nav-item">
             <a class="nav-link" rrouterLinkActive="active" routerLink="/halls">
               Manage Halls
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" rrouterLinkActive="active" routerLink="/halls/create">
+            <a
+              class="nav-link"
+              rrouterLinkActive="active"
+              routerLink="/halls/create"
+            >
               Create Hall
             </a>
           </li>
         </ng-container>
-        <ng-container
-          *ngIf="userRole == 'customer'"
-        >
+        <!-- Customers Menu -->
+        <ng-container *ngIf="userRole == 'customer'">
           <li class="nav-item">
-            <a class="nav-link" rrouterLinkActive="active" routerLink="/search-halls">
+            <a
+              class="nav-link"
+              rrouterLinkActive="active"
+              routerLink="/search-halls"
+            >
               Search Halls
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" rrouterLinkActive="active" routerLink="/bookings">
+            <a
+              class="nav-link"
+              rrouterLinkActive="active"
+              routerLink="/bookings"
+            >
               Bookings
             </a>
           </li>
         </ng-container>
+        <!-- Admin Users Menu -->
         <ng-container *ngIf="userRole == 'admin'">
           <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" routerLink="/admin/dashboard">
+            <a
+              class="nav-link"
+              routerLinkActive="active"
+              routerLink="/admin/dashboard"
+            >
               Dashboard
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" routerLink="/admin/customers"
+            <a
+              class="nav-link"
+              routerLinkActive="active"
+              routerLink="/admin/customers"
               >Manage Customers</a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" routerLink="/admin/manage-halls"
-              >Manage Halls</a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" routerLink="/admin/manage-bookings"
+            <a
+              class="nav-link"
+              routerLinkActive="active"
+              routerLink="/admin/manage-bookings"
               >Manage Bookings</a
             >
           </li>
+          <li>
+            <div ngbDropdown placement="auto" class="d-inline-block mr-5 ml-3">
+              <button
+                class="btn btn-outline-info"
+                id="dropdownBasic1"
+                ngbDropdownToggle
+              >
+                Manage Halls
+              </button>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <a
+                  class="nav-link"
+                  routerLinkActive="active"
+                  routerLink="/admin/manage-halls"
+                  >All Halls</a
+                >
+                <a
+                  class="nav-link"
+                  routerLinkActive="active"
+                  routerLink="/admin/manage-halls-approval"
+                  >Pending Approval Halls</a
+                >
+              </div>
+            </div>
+          </li>
         </ng-container>
       </ng-container>
-      <!-- Guest Users Menu -->
+      <!-- Login Users Menu -->
       <ng-container *ngIf="userRole">
         <div ngbDropdown placement="auto" class="d-inline-block mr-5 ml-3">
           <button
@@ -89,11 +130,16 @@
             My Account
           </button>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <a ngbDropdownItem routerLinkActive="active" routerLink="/user/profile">Profile</a>
+            <a
+              ngbDropdownItem
+              routerLinkActive="active"
+              routerLink="/user/profile"
+              >Profile</a
+            >
             <a ngbDropdownItem type="button" (click)="logout()">Logout</a>
           </div>
         </div>
-      </ng-container> 
+      </ng-container>
     </ul>
   </div>
 </nav>
