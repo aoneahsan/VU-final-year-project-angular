@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
@@ -20,12 +21,12 @@ export class SystemService {
 
     // App Loading Status Manager
     private _loadingPageData = new BehaviorSubject<boolean>(false);
-    
+
     // Backend Api Root Url
     private _apiRootURL: string = API_ROOT_URL; // this will automatically change depending on environment mode
 
 
-    constructor() { }
+    constructor(private _http: HttpClient) { }
 
     getLoadingPageDataStatus() {
         return this._loadingPageData;
@@ -41,5 +42,12 @@ export class SystemService {
 
     getApiRootURL() {
         return this._apiRootURL;
+    }
+
+    uploadFile(data) {
+      return this._http.post<any>(
+        this._apiRootURL + 'upload-file',
+        data
+      );
     }
 }

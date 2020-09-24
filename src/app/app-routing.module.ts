@@ -25,6 +25,7 @@ import { BookingsComponent } from './components/bookings/bookings.component';
 import { HallManagerGuard } from './route-guards/hall-manager/hall-manager.service';
 import { CustomerGuard } from './route-guards/customer/customer.service';
 import { EditHallComponent } from './components/halls/edit-hall/edit-hall.component';
+import { ManageHallsApprovalComponent } from './admin-panel/manage-halls/manage-halls-approval/manage-halls-approval.component';
 
 const routes: Routes = [
   {
@@ -33,17 +34,17 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'home', 
+    path: 'home',
     component: HomeComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: 'sign-in', 
+    path: 'sign-in',
     component: SignInComponent,
     canActivate: [UnAuthGuard]
   },
   {
-    path: 'sign-up', 
+    path: 'sign-up',
     component: SignUpComponent,
     canActivate: [UnAuthGuard]
   },
@@ -95,6 +96,11 @@ const routes: Routes = [
   {
     path: 'admin/manage-halls',
     component: ManageHallsComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'admin/manage-halls-approval',
+    component: ManageHallsApprovalComponent,
     canActivate: [AdminGuard]
   },
   {

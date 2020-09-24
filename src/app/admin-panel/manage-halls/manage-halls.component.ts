@@ -15,6 +15,9 @@ export class ManageHallsComponent implements OnInit, OnDestroy {
   _loadingStatus: boolean = false;
   _loadingStatus_Sub: Subscription;
 
+  updateHall_Sub: Subscription;
+  deleteHall_Sub: Subscription;
+
   availableHalls: HallDetailInterface[];
   private _halls_Sub: Subscription;
 
@@ -39,6 +42,26 @@ export class ManageHallsComponent implements OnInit, OnDestroy {
         console.log("ManageHallsComponent == getAllHalls == err = ", err);
       }
     );
+  }
+
+  onDeleteHall(hall) {
+    this._systemService.loadingPageDataTrue();
+    this.deleteHall_Sub = this._adminService.deleteHall(hall.id).subscribe(
+      res => {
+        console.log("ManageHallsComponent == onDeleteHall == res = ", res);
+        this._systemService.loadingPageDataFalse();
+        this.removeHallLocally(hall);
+      },
+      err => {
+        console.log("ManageHallsComponent == onDeleteHall == err = ", err);
+        this._systemService.loadingPageDataFalse();
+      }
+    );
+  }
+
+  removeHallLocally(hall) {
+    const newHalls = this.availableHalls.filter(el => el.id != hall.id);
+    this.availableHalls = newHalls;
   }
 
   ngOnDestroy(): void {

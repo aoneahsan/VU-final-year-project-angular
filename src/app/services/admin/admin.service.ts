@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-// Services 
+// Services
 import { SystemService } from '../system.service';
 
 // Interfaces
@@ -11,113 +11,98 @@ import { BookingDetailInterface } from 'src/app/interfaces/booking/booking-detai
 import { UserProfileInterface } from 'src/app/interfaces/user/user-profile.interface';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 
 export class AdminService {
 
-    constructor(private _systemService: SystemService, private _http: HttpClient) {}
+  constructor(private _systemService: SystemService, private _http: HttpClient) { }
 
-    // Users Functions
-    getAllCustomers() {
-        return this._http.get<any>(
-            this._systemService.getApiRootURL() + 'admin/customers'
-        );
-    }
+  // Users Functions
+  getAllCustomers() {
+    return this._http.get<any>(
+      this._systemService.getApiRootURL() + 'admin/customers'
+    );
+  }
 
-    getAllHallManagers() {
-        return this._http.get<any>(
-            this._systemService.getApiRootURL() + 'admin/hall_managers'
-        );
-    }
+  getAllHallManagers() {
+    return this._http.get<any>(
+      this._systemService.getApiRootURL() + 'admin/hall_managers'
+    );
+  }
 
-    getUser(id, type: 'customer'|'hall_manager') {
-        if (type == 'customer') {
-            return this._http.get<UserProfileInterface>(
-                this._systemService.getApiRootURL() + `admin/customers/${id}`
-            );
-        } else if (type == 'hall_manager') {
-            return this._http.get<UserProfileInterface>(
-                this._systemService.getApiRootURL() + `admin/hall_managers/${id}`
-            );
-        }
+  getUser(id, type: 'customer' | 'hall_manager') {
+    if (type == 'customer') {
+      return this._http.get<UserProfileInterface>(
+        this._systemService.getApiRootURL() + `admin/customers/${id}`
+      );
+    } else if (type == 'hall_manager') {
+      return this._http.get<UserProfileInterface>(
+        this._systemService.getApiRootURL() + `admin/hall_managers/${id}`
+      );
     }
+  }
 
-    updateUser(data: UserProfileInterface, type: 'customer'|'hall_manager') {
-        if (type == 'customer') {
-            return this._http.post<UserProfileInterface>(
-                this._systemService.getApiRootURL() + `admin/customers/${data.id}`,
-                data
-            );
-        } else if (type == 'hall_manager') {
-            return this._http.post<UserProfileInterface>(
-                this._systemService.getApiRootURL() + `admin/hall_managers/${data.id}`,
-                data
-            );
-        }
+  deleteUser(id, type: 'customer' | 'hall_manager') {
+    if (type == 'customer') {
+      return this._http.delete<any>(
+        this._systemService.getApiRootURL() + `admin/customers/${id}`
+      );
+    } else if (type == 'hall_manager') {
+      return this._http.delete<any>(
+        this._systemService.getApiRootURL() + `admin/hall_managers/${id}`
+      );
     }
+  }
 
-    deleteUser(id, type: 'customer'|'hall_manager') {
-        if (type == 'customer') {
-            return this._http.delete<any>(
-                this._systemService.getApiRootURL() + `admin/customers/${id}`
-            );
-        } else if (type == 'hall_manager') {
-            return this._http.delete<any>(
-                this._systemService.getApiRootURL() + `admin/hall_managers/${id}`
-            );
-        }
-    }
+  // Halls Related Functions
+  getAllHalls() {
+    return this._http.get<any>(
+      this._systemService.getApiRootURL() + 'admin/halls'
+    );
+  }
 
-    // Halls Related Functions
-    getAllHalls() {
-        return this._http.get<any>(
-            this._systemService.getApiRootURL() + 'admin/halls'
-        );
-    }
+  getPendingApprovalHalls() {
+    return this._http.get<any>(
+      this._systemService.getApiRootURL() + 'admin/halls-pending-approval'
+    );
+  }
 
-    getHall(id) {
-        return this._http.get<HallDetailInterface>(
-            this._systemService.getApiRootURL() + `admin/halls/${id}`
-        );
-    }
+  getHall(id) {
+    return this._http.get<HallDetailInterface>(
+      this._systemService.getApiRootURL() + `admin/halls/${id}`
+    );
+  }
 
-    updateHall(data: HallDetailInterface) {
-        return this._http.post<HallDetailInterface>(
-            this._systemService.getApiRootURL() + `admin/halls/${data.id}`,
-            data
-        );
-    }
+  updateHall(data: HallDetailInterface) {
+    return this._http.post<HallDetailInterface>(
+      this._systemService.getApiRootURL() + `admin/halls/${data.id}`,
+      data
+    );
+  }
 
-    deleteHall(id) {
-        return this._http.delete<any>(
-            this._systemService.getApiRootURL() + `admin/halls/${id}`
-        );
-    }
+  deleteHall(id) {
+    return this._http.delete<any>(
+      this._systemService.getApiRootURL() + `admin/halls/${id}`
+    );
+  }
 
-    // Bookings Related Functions
-    getAllBookings() {
-        return this._http.get<any>(
-            this._systemService.getApiRootURL() + 'admin/bookings'
-        );
-    }
+  // Bookings Related Functions
+  getAllBookings() {
+    return this._http.get<any>(
+      this._systemService.getApiRootURL() + 'admin/bookings'
+    );
+  }
 
-    getBooking(id) {
-        return this._http.get<BookingDetailInterface>(
-            this._systemService.getApiRootURL() + `admin/bookings/${id}`
-        );
-    }
+  getBooking(id) {
+    return this._http.get<BookingDetailInterface>(
+      this._systemService.getApiRootURL() + `admin/bookings/${id}`
+    );
+  }
 
-    updateBooking(data: BookingDetailInterface) {
-        return this._http.post<BookingDetailInterface>(
-            this._systemService.getApiRootURL() + `admin/bookings/${data.id}`,
-            data
-        );
-    }
-
-    deleteBooking(id) {
-        return this._http.delete<any>(
-            this._systemService.getApiRootURL() + `admin/bookings/${id}`
-        );
-    }
+  deleteBooking(id) {
+    return this._http.delete<any>(
+      this._systemService.getApiRootURL() + `admin/bookings/${id}`
+    );
+  }
 }

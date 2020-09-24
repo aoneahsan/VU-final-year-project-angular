@@ -35,6 +35,7 @@ import { DashboardComponent } from './admin-panel/dashboard/dashboard.component'
 import { ManageBookingsComponent } from './admin-panel/manage-bookings/manage-bookings.component';
 import { SingleHallComponent } from './shared/components/single-hall/single-hall.component';
 import { EditHallComponent } from './components/halls/edit-hall/edit-hall.component';
+import { ManageHallsApprovalComponent } from './admin-panel/manage-halls/manage-halls-approval/manage-halls-approval.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { EditHallComponent } from './components/halls/edit-hall/edit-hall.compon
     DashboardComponent,
     ManageBookingsComponent,
     SingleHallComponent,
-    EditHallComponent
+    EditHallComponent,
+    ManageHallsApprovalComponent
   ],
   imports: [
     BrowserModule,
