@@ -1,144 +1,150 @@
 <ng-container *ngIf="!_loadingStatus">
   <app-header></app-header>
   <div class="container py-4">
-    <form class="border p-4" #form="ngForm" (onSubmit)="onSubmit(form)">
-      <div class="form-group">
-        <label for="name" class="col-sm-1-12 col-form-label">Hall Name</label>
-        <div class="col-sm-1-12 w-100">
-          <input
-            type="text"
-            class="form-control"
-            name="name"
-            id="name"
-            ngModel
-            required
-          />
+    <ng-container *ngIf="userData.is_approved">
+      <form class="border p-4" #form="ngForm" (onSubmit)="onSubmit(form)">
+        <div class="form-group">
+          <label for="name" class="col-sm-1-12 col-form-label">Hall Name</label>
+          <div class="col-sm-1-12 w-100">
+            <input
+              type="text"
+              class="form-control"
+              name="name"
+              id="name"
+              ngModel
+              required
+            />
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="description" class="col-sm-1-12 col-form-label"
-          >Hall Description</label
-        >
-        <div class="col-sm-1-12 w-100">
-          <input
-            type="text"
-            class="form-control"
-            name="description"
-            id="description"
-            ngModel
-            required
-          />
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="hall_size">Hall Size (No. of persons)</label>
-        <select
-          class="form-control"
-          name="hall_size"
-          id="hall_size"
-          ngModel
-          required
-        >
-          <option value="">Select Hall Size</option>
-          <option>50</option>
-          <option>100</option>
-          <option>150</option>
-          <option>200</option>
-          <option>250</option>
-          <option>300</option>
-          <option>350</option>
-          <option>400</option>
-          <option>450</option>
-          <option>500</option>
-          <option>550</option>
-          <option>600</option>
-          <option>650</option>
-          <option>700</option>
-          <option>750</option>
-          <option>800</option>
-          <option>850</option>
-          <option>900</option>
-          <option>950</option>
-          <option>1000</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="event_type">Event Type</label>
-        <select
-          class="form-control"
-          name="event_type"
-          id="event_type"
-          ngModel
-          required
-        >
-          <option value="">Select Event Type</option>
-          <option>Party</option>
-          <option>Birthday</option>
-          <option>Mariage</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="hall_rent">Hall Rent</label>
-        <input
-          type="number"
-          class="form-control"
-          name="hall_rent"
-          minlength="10"
-          id="hall_rent"
-          required
-          ngModel
-        />
-      </div>
-      <div class="form-group">
-        <label for="location">Hall Location</label>
-        <select class="form-control" name="location" ngModel required id="location">
-          <option value="">Select Location</option>
-          <option value="lahore">Lahore</option>
-          <option value="karachi">Karachi</option>
-          <option value="pakistan">Pakistan</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="min_no_of_persons">Min # of Persons</label>
-        <input
-          type="number"
-          class="form-control"
-          name="min_no_of_persons"
-          minlength="10"
-          id="min_no_of_persons"
-          required
-          ngModel
-        />
-      </div>
-      <div class="form-check">
-        <label class="form-check-label">
-          <input
-            type="checkbox"
-            class="form-check-input"
-            name="is_available"
-            id="is_available"
-            ngModel
-            value="checkedValue"
-            checked
-          />
-          Is Available (check if hall is currently available)
-        </label>
-      </div>
-      <div class="form-group">
-        <div class="col-12 p-0 pt-4">
-          <button
-            type="submit"
-            class="btn btn-primary"
-            [disabled]="!form.valid && formSubmited"
-            (click)="onSubmit(form)"
-            *ngIf="!formSubmited"
+        <div class="form-group">
+          <label for="description" class="col-sm-1-12 col-form-label"
+            >Hall Description</label
           >
-            Submit
-          </button>
-          <app-loading-spinner *ngIf="formSubmited"></app-loading-spinner>
+          <div class="col-sm-1-12 w-100">
+            <input
+              type="text"
+              class="form-control"
+              name="description"
+              id="description"
+              ngModel
+              required
+            />
+          </div>
         </div>
-      </div>
-    </form>
+        <div class="form-group">
+          <label for="hall_size">Hall Size (No. of persons)</label>
+          <select
+            class="form-control"
+            name="hall_size"
+            id="hall_size"
+            ngModel
+            required
+          >
+            <option value="">Select Hall Size</option>
+            <option>50</option>
+            <option>100</option>
+            <option>150</option>
+            <option>200</option>
+            <option>250</option>
+            <option>300</option>
+            <option>350</option>
+            <option>400</option>
+            <option>450</option>
+            <option>500</option>
+            <option>550</option>
+            <option>600</option>
+            <option>650</option>
+            <option>700</option>
+            <option>750</option>
+            <option>800</option>
+            <option>850</option>
+            <option>900</option>
+            <option>950</option>
+            <option>1000</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="event_type">Event Type</label>
+          <select
+            class="form-control"
+            name="event_type"
+            id="event_type"
+            ngModel
+            required
+          >
+            <option value="">Select Event Type</option>
+            <option>Party</option>
+            <option>Birthday</option>
+            <option>Mariage</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="hall_rent">Hall Rent</label>
+          <input
+            type="number"
+            class="form-control"
+            name="hall_rent"
+            minlength="10"
+            id="hall_rent"
+            required
+            ngModel
+          />
+        </div>
+        <div class="form-group">
+          <label for="location">Hall Location</label>
+          <select class="form-control" name="location" ngModel required id="location">
+            <option value="">Select Location</option>
+            <option value="lahore">Lahore</option>
+            <option value="karachi">Karachi</option>
+            <option value="pakistan">Pakistan</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="min_no_of_persons">Min # of Persons</label>
+          <input
+            type="number"
+            class="form-control"
+            name="min_no_of_persons"
+            minlength="10"
+            id="min_no_of_persons"
+            required
+            ngModel
+          />
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              name="is_available"
+              id="is_available"
+              ngModel
+              value="checkedValue"
+              checked
+            />
+            Is Available (check if hall is currently available)
+          </label>
+        </div>
+        <div class="form-group">
+          <div class="col-12 p-0 pt-4">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!form.valid && formSubmited"
+              (click)="onSubmit(form)"
+              *ngIf="!formSubmited"
+            >
+              Submit
+            </button>
+            <app-loading-spinner *ngIf="formSubmited"></app-loading-spinner>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+    <div *ngIf="!userData.is_approved" class="text-center">
+      <h1>Your account is not approved by admin yet!</h1>
+      <p>Approve your account first to add any hall.</p>
+    </div>
   </div>
   <app-footer></app-footer>
 </ng-container>

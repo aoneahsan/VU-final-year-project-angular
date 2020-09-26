@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HallDetailInterface } from 'src/app/interfaces/hall/hall-detail.interface';
 import { User } from 'src/app/models/auth/user-model';
@@ -9,11 +8,11 @@ import { HallManagerService } from 'src/app/services/hall-manager/hall-manager.s
 import { SystemService } from 'src/app/services/system.service';
 
 @Component({
-  selector: 'app-edit-hall',
-  templateUrl: './edit-hall.component.html',
-  styleUrls: ['./edit-hall.component.scss']
+  selector: 'app-view-hall',
+  templateUrl: './view-hall.component.html',
+  styleUrls: ['./view-hall.component.scss']
 })
-export class EditHallComponent implements OnInit, OnDestroy {
+export class ViewHallComponent implements OnInit, OnDestroy {
 
   _loadingStatus: boolean = false;
   private _loadingStatus_Sub: Subscription;

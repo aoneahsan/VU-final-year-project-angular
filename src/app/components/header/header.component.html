@@ -93,29 +93,20 @@
             >
           </li>
           <li>
-            <div ngbDropdown placement="auto" class="d-inline-block mr-5 ml-3">
-              <button
-                class="btn btn-outline-info"
-                id="dropdownBasic1"
-                ngbDropdownToggle
-              >
-                Manage Halls
-              </button>
-              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <a
-                  class="nav-link"
-                  routerLinkActive="active"
-                  routerLink="/admin/manage-halls"
-                  >All Halls</a
-                >
-                <a
-                  class="nav-link"
-                  routerLinkActive="active"
-                  routerLink="/admin/manage-halls-approval"
-                  >Pending Approval Halls</a
-                >
-              </div>
-            </div>
+            <a
+              class="nav-link"
+              routerLinkActive="active"
+              routerLink="/admin/manage-halls"
+              >All Halls</a
+            >
+          </li>
+          <li>
+            <a
+              class="nav-link"
+              routerLinkActive="active"
+              routerLink="/admin/manage-hall-managers"
+              >Hall Managers</a
+            >
           </li>
         </ng-container>
       </ng-container>

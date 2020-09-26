@@ -1,0 +1,57 @@
+<ng-container *ngIf="!_loadingStatus">
+  <app-header></app-header>
+  <div class="container py-4 table-responsive">
+    <table
+      class="table table-striped table-hover table-inverse"
+      *ngIf="hallManagers && hallManagers.length > 0"
+    >
+      <thead class="thead-inverse">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Location</th>
+          <th>Phone #</th>
+          <th>CNIC</th>
+          <th>Is Approved</th>
+          <th>Profile Pic</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let manager of hallManagers; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ manager.name }}</td>
+          <td>{{ manager.email }}</td>
+          <td>{{ manager.location }}</td>
+          <td>{{ manager.phone_number }}</td>
+          <td>{{ manager.cnic }}</td>
+          <td>{{ manager.is_approved ? "Approved" : "Not Approved" }}</td>
+          <td>
+            <img
+              [src]="manager.profile_image != 'assets/img/placeholder.jpg' ? 'http://localhost:8000' + manager.profile_image : manager.profile_image"
+              class="img-fluid"
+              style="width: 75px"
+              [alt]="manager.name"
+            />
+          </td>
+          <td class="text-center">
+            <button
+              class="btn btn-outline-primary btn-sm"
+              (click)="openUserUpdateModal(manager)"
+            >
+              Edit
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-container *ngIf="!hallManagers || hallManagers.length < 1">
+      <h3 class="text-center">No Data Found.</h3>
+    </ng-container>
+  </div>
+  <app-footer></app-footer>
+</ng-container>
+<div style="height: 100vh" *ngIf="_loadingStatus">
+  <app-loading-spinner></app-loading-spinner>
+</div>

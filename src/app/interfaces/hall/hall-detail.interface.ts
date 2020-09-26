@@ -8,6 +8,7 @@ export interface HallDetailInterface {
     location?,
     min_no_of_persons?,
     is_available?,
-    is_approved?,
+    open_time?,
+    closed_time?,
     created_at?
 }

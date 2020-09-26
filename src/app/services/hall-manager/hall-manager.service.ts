@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-// Services 
+// Services
 import { SystemService } from '../system.service';
 
 // Interfaces
@@ -24,20 +24,20 @@ export class HallManagerService {
     }
 
     getHall(id) {
-        return this._http.get<HallDetailInterface>(
+        return this._http.get<any>(
             this._systemService.getApiRootURL() + `hall-manager/halls/${id}`
         );
     }
 
     createHall(data: HallDetailInterface) {
-        return this._http.post<HallDetailInterface>(
+        return this._http.post<any>(
             this._systemService.getApiRootURL() + `hall-manager/halls`,
             data
         );
     }
 
     updateHall(data: HallDetailInterface) {
-        return this._http.post<HallDetailInterface>(
+        return this._http.post<any>(
             this._systemService.getApiRootURL() + `hall-manager/halls/${data.id}`,
             data
         );

@@ -6,5 +6,6 @@ export interface UserProfileInterface {
     location,
     cnic,
     profile_image,
-    role?
+    role?,
+    is_approved?
 }

@@ -5,6 +5,7 @@ export class User {
         public email,
         public phone_number,
         public profile_img,
+        public is_approved,
         public role,
         public _tokken,
         public tokken_expire_time

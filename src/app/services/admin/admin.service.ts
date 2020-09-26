@@ -62,12 +62,6 @@ export class AdminService {
     );
   }
 
-  getPendingApprovalHalls() {
-    return this._http.get<any>(
-      this._systemService.getApiRootURL() + 'admin/halls-pending-approval'
-    );
-  }
-
   getHall(id) {
     return this._http.get<HallDetailInterface>(
       this._systemService.getApiRootURL() + `admin/halls/${id}`

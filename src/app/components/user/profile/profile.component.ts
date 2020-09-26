@@ -4,6 +4,8 @@ import { UserProfileInterface } from 'src/app/interfaces/user/user-profile.inter
 import { UserService } from 'src/app/services/user/user.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { SystemService } from 'src/app/services/system.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ProfileUpdateModalComponent } from '../profile-update-modal/profile-update-modal.component';
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +24,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private _editUserProfile_Sub: Subscription;
   private _deleteUserProfile_Sub: Subscription;
 
-  constructor(private _userService: UserService, private _authService: AuthService, private _systemService: SystemService) { }
+  constructor(
+    private _userService: UserService,
+    private _authService: AuthService,
+    private _systemService: SystemService,
+    private _modalService: NgbModal
+  ) { }
 
   ngOnInit(): void {
     this._systemService.loadingPageDataTrue();
@@ -60,6 +67,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
     } else {
       return;
     }
+  }
+
+  openUserUpdateModal(userData) {
+    const modalRef = this._modalService.open(ProfileUpdateModalComponent);
+    modalRef.componentInstance.user = userData;
+    modalRef.result.then(
+      (result) => {
+        if (result != 'cancel' && result != 'close') {
+          // console.log("ChatUserComponent == openReportSpamModal == result = ", result);
+        }
+      },
+      (reason) => {
+        // console.log(reason);
+      });
   }
 
   ngOnDestroy() {

@@ -16,8 +16,6 @@
           <th>Hall Rent</th>
           <th>Hall Size</th>
           <th>Is Available</th>
-          <th>Is Approved</th>
-          <th colspan="2" class="text-center">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -31,13 +29,6 @@
           <td>{{ hall.hall_rent }}</td>
           <td>{{ hall.hall_size }}</td>
           <td>{{ hall.is_available ? 'Available' : 'Not Available' }}</td>
-          <td>{{ hall.is_approved ? 'Approved' : 'Not Approved' }}</td>
-          <td>
-            <button class="btn btn-outline-warning btn-sm">edit</button>
-          </td>
-          <td>
-            <button class="btn btn-outline-danger btn-sm" (click)="onDeleteHall(hall)">delete</button>
-          </td>
         </tr>
       </tbody>
     </table>

@@ -16,11 +16,18 @@ export class UserService {
         );
     }
 
-    editUserProfileData(data) {
-        return this._http.post<any>(
-            this._systemService.getApiRootURL() + 'user/profile',
+    editUserProfileData(data, userID) {
+        return this._http.put<any>(
+            this._systemService.getApiRootURL() + `user/profile/${userID}`,
             data
         );
+    }
+
+    updateProfileImage(data, userID) {
+      return this._http.post<any>(
+        this._systemService.getApiRootURL() + `user/profile-img/${userID}/update`,
+        data
+      );
     }
 
     deleteUserAccount() {

@@ -1,0 +1,126 @@
+<ng-container>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title m-0">Deliver Completed Work</h2>
+      <button
+        type="button"
+        class="close border-0"
+        data-dismiss="modal"
+        aria-label="Close"
+        (click)="activeModal.close()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body text-muted p-0" *ngIf="!requestSuccessfull && user">
+      <form class="border p-4" #form="ngForm" (onSubmit)="onSubmit(form)">
+        <div class="form-group">
+          <label for="name" class="col-sm-1-12 col-form-label">Name</label>
+          <div class="col-sm-1-12 w-100">
+            <input
+              type="text"
+              class="form-control"
+              name="name"
+              id="name"
+              [(ngModel)]="user.name"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="location">Location</label>
+          <input
+            class="form-control"
+            name="location"
+            id="location"
+            [(ngModel)]="user.location"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="Phone_Number">Phone Number</label>
+          <input
+            type="tel"
+            class="form-control"
+            name="Phone_Number"
+            id="Phone_Number"
+            minlength="11"
+            maxlength="11"
+            [(ngModel)]="user.phone_number"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="cnic">CNIC</label>
+          <input
+            type="tel"
+            class="form-control"
+            name="cnic"
+            minlength="13"
+            maxlength="13"
+            id="cnic"
+            required
+            [(ngModel)]="user.cnic"
+          />
+        </div>
+        <div class="form-group" *ngIf="user && user.role === 'hall_manager' && currentUserData.role === 'admin'">
+          <label for="is_approved">Is Approved</label>
+          <input
+            type="checkbox"
+            class="form-control"
+            style="width: 20px"
+            name="is_approved"
+            id="is_approved"
+            [(ngModel)]="user.is_approved"
+          />
+          <span class="small">check this box to approve this hall manager</span>
+        </div>
+        <div class="form-group">
+          <label for="profile_image">Profile Image</label>
+          <input
+            type="file"
+            class="form-control"
+            (change)="onFileSelected($event)"
+            ngModel
+            id="profile_image"
+            name="file"
+          />
+        </div>
+        <div class="form-group">
+          <div class="col-12 p-0">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!form.valid && !processingHttpRequest"
+              (click)="onSubmit()"
+              *ngIf="!processingHttpRequest"
+            >
+              Submit
+            </button>
+            <app-loading-spinner
+              *ngIf="processingHttpRequest"
+            ></app-loading-spinner>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- After Successfull request -->
+    <div class="modal-body text-center text-success" *ngIf="requestSuccessfull">
+      <h3>Delivery Placed Successfully.</h3>
+      <button class="btn btn-primary lift btn-sm" (click)="activeModal.close()">
+        Okay
+      </button>
+    </div>
+    <!-- <div class="modal-footer" *ngIf="!requestSuccessfull">
+      <button
+        type="button"
+        class="btn btn-outline-primary btn-sm lift m-auto"
+        (click)="onSubmit('publish')"
+        *ngIf="!processingHttpRequest"
+      >
+        Update
+      </button>
+      <app-loading-spinner *ngIf="processingHttpRequest"></app-loading-spinner>
+    </div> -->
+  </div>
+</ng-container>
