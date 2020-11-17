@@ -6,7 +6,12 @@
         <div class="row">
           <div class="col-3"><strong>User Profile Detail</strong></div>
           <div class="col-9 pl-4 text-right">
-            <button class="btn btn-info btn-sm" (click)="openUserUpdateModal(currentUserData)">Edit</button>
+            <button
+              class="btn btn-info btn-sm"
+              (click)="openUserUpdateModal(currentUserData)"
+            >
+              Edit
+            </button>
             <button
               class="btn btn-danger btn-sm ml-3"
               (click)="onDeleteAccount()"
@@ -51,7 +56,18 @@
           <div class="col-3 border-right"><strong>Profile Image</strong></div>
           <div class="col-9 pl-4">
             <img
+              *ngIf="
+                currentUserData.profile_image != 'assets/img/placeholder.jpg'
+              "
               [src]="'http://localhost:8000' + currentUserData.profile_image"
+              class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
+              [alt]="currentUserData.name"
+            />
+            <img
+              *ngIf="
+                currentUserData.profile_image == 'assets/img/placeholder.jpg'
+              "
+              [src]="currentUserData.profile_image"
               class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
               [alt]="currentUserData.name"
             />
@@ -63,6 +79,6 @@
   </div>
   <app-footer></app-footer>
 </ng-container>
-<div style="height: 100vh;" *ngIf="_loadingStatus">
+<div style="height: 100vh" *ngIf="_loadingStatus">
   <app-loading-spinner></app-loading-spinner>
 </div>

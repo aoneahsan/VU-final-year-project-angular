@@ -25,6 +25,7 @@ export class SystemService {
     // Backend Api Root Url
     private _apiRootURL: string = API_ROOT_URL; // this will automatically change depending on environment mode
 
+    private _backendRootURL: string = 'http://localhost:8000'; // this is use in different places inside app, mostly when showing images as a root URL.
 
     constructor(private _http: HttpClient) { }
 
@@ -42,6 +43,10 @@ export class SystemService {
 
     getApiRootURL() {
         return this._apiRootURL;
+    }
+
+    getBackendRootURL() {
+        return this._backendRootURL;
     }
 
     uploadFile(data) {

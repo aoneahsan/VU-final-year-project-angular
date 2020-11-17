@@ -175,35 +175,29 @@
             Is Available (check if hall is currently available)
           </label>
         </div>
-        <!-- <div class="form-group">
-          <div class="col-12 p-0 pt-4">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              [disabled]="!form.valid && formSubmited"
-              (click)="onSubmit()"
-              *ngIf="!formSubmited"
-            >
-              Submit
-            </button>
-            <app-loading-spinner *ngIf="formSubmited"></app-loading-spinner>
-          </div>
-        </div> -->
       </form>
     </ng-container>
+    <!-- Hall Gallery -->
     <ng-container>
       <div class="card mt-4">
         <div class="card-header">
           <div class="row">
             <div class="col-6">Hall Images</div>
             <div class="col-6 text-right">
-              <button class="btn btn-default" (click)="addHallImageInput.click()">Add Image</button>
+              <button
+                [disabled]="processingHallGalleryRequest"
+                class="btn btn-default"
+                (click)="addHallImageInput.click()"
+              >
+                Add Image
+              </button>
               <input
-              #addHallImageInput
+                #addHallImageInput
                 type="file"
-                class="form-control"
+                accept="image/*"
                 (change)="onFileSelected($event)"
                 ngModel
+                style="position: fixed; top: -1000%; visibility: hidden"
                 id="profile_image"
                 name="file"
               />
@@ -216,18 +210,27 @@
               <thead>
                 <tr>
                   <th>ID</th>
+                  <th></th>
                   <th>Image</th>
+                  <th></th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let image of hallImages; let i = index">
-                  <td>{{ i + 1 }}</td>
-                  <td><img [src]="image" [alt]="image" /></td>
+                  <td>{{ image.id }}</td>
+                  <td colspan="3" class="text-center">
+                    <img
+                      class="col-3"
+                      style="margin: auto"
+                      [src]="_backendURL + image.file_url"
+                      [alt]="image.file_name"
+                    />
+                  </td>
                   <td>
                     <button
                       class="btn btn-danger btn-sm"
-                      (click)="deleteHallImage()"
+                      (click)="deleteHallImage(image)"
                     >
                       Delete
                     </button>
@@ -236,11 +239,126 @@
               </tbody>
             </table>
           </ng-container>
-          <ng-container *ngIf="!hallImages">
-            No Images Found, Try adding some :]
+          <ng-container *ngIf="!hallImages || hallImages?.length < 1">
+            <div class="text-center">No Images Found, Try adding some :]</div>
           </ng-container>
         </div>
-        <div class="card-footer text-muted">Footer</div>
+      </div>
+    </ng-container>
+    <!-- Hall Food Menu -->
+    <ng-container>
+      <div class="card mt-4">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-6">Hall Food Menu</div>
+            <div class="col-6 text-right">
+              <button class="btn btn-default" (click)="addHallFoodItem()">
+                Add Item
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ng-container *ngIf="hallFoodItems">
+            <table class="table" *ngIf="hallFoodItems?.length > 0">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Title</th>
+                  <th>Price</th>
+                  <th>Is Available</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of hallFoodItems; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.title }}</td>
+                  <td>{{ item.price | currency }}</td>
+                  <td colspan="2">
+                    <button
+                      class="btn btn-danger btn-sm"
+                      (click)="editHallFoodItem(item)"
+                    >
+                      Delete
+                    </button>
+                    <button
+                      class="btn btn-danger btn-sm"
+                      (click)="deleteHallFoodItem(item)"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ng-container>
+          <ng-container *ngIf="!hallFoodItems || hallFoodItems?.length < 1">
+            <div class="text-center">
+              No Food Items Found, Try adding some :]
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+    <!-- Hall Feature Items -->
+    <ng-container>
+      <div class="card mt-4">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-6">Hall Feature Items</div>
+            <div class="col-6 text-right">
+              <button class="btn btn-default" (click)="addHallFeatureItem()">
+                Add Item
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ng-container *ngIf="hallFeatureItems">
+            <table class="table" *ngIf="hallFeatureItems?.length > 0">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Price</th>
+                  <th>Is Available</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of hallFeatureItems; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.title }}</td>
+                  <td>{{ item.description }}</td>
+                  <td>{{ item.price | currency }}</td>
+                  <td colspan="2">
+                    <button
+                      class="btn btn-danger btn-sm"
+                      (click)="editHallFeatureItem(item)"
+                    >
+                      Delete
+                    </button>
+                    <button
+                      class="btn btn-danger btn-sm"
+                      (click)="deleteHallFeatureItem(item)"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ng-container>
+          <ng-container
+            *ngIf="!hallFeatureItems || hallFeatureItems?.length < 1"
+          >
+            <div class="text-center">
+              No Feature Items Found, Try adding some :]
+            </div>
+          </ng-container>
+        </div>
       </div>
     </ng-container>
     <div *ngIf="!userData.is_approved" class="text-center">

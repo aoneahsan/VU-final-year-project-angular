@@ -63,7 +63,14 @@
             [(ngModel)]="user.cnic"
           />
         </div>
-        <div class="form-group" *ngIf="user && user.role === 'hall_manager' && currentUserData.role === 'admin'">
+        <div
+          class="form-group"
+          *ngIf="
+            user &&
+            user.role === 'hall_manager' &&
+            currentUserData.role === 'admin'
+          "
+        >
           <label for="is_approved">Is Approved</label>
           <input
             type="checkbox"
@@ -85,6 +92,7 @@
             id="profile_image"
             name="file"
           />
+          <!-- accept="" -->
         </div>
         <div class="form-group">
           <div class="col-12 p-0">
