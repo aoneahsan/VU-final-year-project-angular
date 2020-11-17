@@ -2,7 +2,7 @@
   <app-header></app-header>
   <div class="container py-4">
     <ng-container *ngIf="userData.is_approved && hall">
-      <form class="border p-4" #form="ngForm" (onSubmit)="onSubmit(form)">
+      <form class="border p-4" #form="ngForm" (onSubmit)="onSubmit()">
         <div class="form-group">
           <label for="name" class="col-sm-1-12 col-form-label">Hall Name</label>
           <div class="col-sm-1-12 w-100">

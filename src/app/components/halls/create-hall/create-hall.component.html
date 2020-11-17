@@ -92,7 +92,13 @@
         </div>
         <div class="form-group">
           <label for="location">Hall Location</label>
-          <select class="form-control" name="location" ngModel required id="location">
+          <select
+            class="form-control"
+            name="location"
+            ngModel
+            required
+            id="location"
+          >
             <option value="">Select Location</option>
             <option value="lahore">Lahore</option>
             <option value="karachi">Karachi</option>
@@ -148,6 +154,6 @@
   </div>
   <app-footer></app-footer>
 </ng-container>
-<div style="height: 100vh;" *ngIf="_loadingStatus">
+<div style="height: 100vh" *ngIf="_loadingStatus">
   <app-loading-spinner></app-loading-spinner>
 </div>

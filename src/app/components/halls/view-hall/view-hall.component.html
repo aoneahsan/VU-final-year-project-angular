@@ -2,13 +2,15 @@
   <app-header></app-header>
   <div class="container py-4">
     <ng-container *ngIf="userData.is_approved && hall">
-      <form class="border p-4" #form="ngForm" (onSubmit)="onSubmit(form)">
+      <form class="border p-4" #form="ngForm">
         <div class="form-group">
           <label for="name" class="col-sm-1-12 col-form-label">Hall Name</label>
           <div class="col-sm-1-12 w-100">
             <input
               type="text"
               class="form-control"
+              readonly
+              disabled
               name="name"
               id="name"
               [(ngModel)]="hall.name"
@@ -24,6 +26,8 @@
             <input
               type="text"
               class="form-control"
+              readonly
+              disabled
               name="description"
               id="description"
               [(ngModel)]="hall.description"
@@ -35,6 +39,8 @@
           <label for="hall_size">Hall Size (No. of persons)</label>
           <select
             class="form-control"
+            readonly
+            disabled
             name="hall_size"
             id="hall_size"
             [(ngModel)]="hall.hall_size"
@@ -67,6 +73,8 @@
           <label for="event_type">Event Type</label>
           <select
             class="form-control"
+            readonly
+            disabled
             name="event_type"
             id="event_type"
             [(ngModel)]="hall.event_type"
@@ -83,6 +91,8 @@
           <input
             type="number"
             class="form-control"
+            readonly
+            disabled
             name="hall_rent"
             minlength="10"
             id="hall_rent"
@@ -94,6 +104,8 @@
           <label for="location">Hall Location</label>
           <select
             class="form-control"
+            readonly
+            disabled
             name="location"
             [(ngModel)]="hall.location"
             required
@@ -110,6 +122,8 @@
           <input
             type="number"
             class="form-control"
+            readonly
+            disabled
             name="min_no_of_persons"
             minlength="10"
             id="min_no_of_persons"
@@ -122,6 +136,8 @@
           <input
             type="time"
             class="form-control"
+            readonly
+            disabled
             name="hall_open_time"
             minlength="10"
             id="hall_open_time"
@@ -134,6 +150,8 @@
           <input
             type="time"
             class="form-control"
+            readonly
+            disabled
             name="hall_closed_time"
             minlength="10"
             id="hall_closed_time"
@@ -146,6 +164,8 @@
             <input
               type="checkbox"
               class="form-check-input"
+              readonly
+              disabled
               name="is_available"
               id="is_available"
               [(ngModel)]="hall.is_available"
@@ -155,7 +175,7 @@
             Is Available (check if hall is currently available)
           </label>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
           <div class="col-12 p-0 pt-4">
             <button
               type="submit"
@@ -168,8 +188,17 @@
             </button>
             <app-loading-spinner *ngIf="formSubmited"></app-loading-spinner>
           </div>
-        </div>
+        </div> -->
       </form>
+    </ng-container>
+    <ng-container>
+      <div class="card mt-4">
+        <img class="card-img-top" src="holder.js/100x180/" alt="">
+        <div class="card-body">
+          <h4 class="card-title">Title</h4>
+          <p class="card-text">Text</p>
+        </div>
+      </div>
     </ng-container>
     <div *ngIf="!userData.is_approved" class="text-center">
       <h1>Your account is not approved by admin yet!</h1>
