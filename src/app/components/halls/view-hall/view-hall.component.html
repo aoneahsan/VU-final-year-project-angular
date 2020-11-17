@@ -221,8 +221,11 @@
                   <td>{{ image.id }}</td>
                   <td colspan="3" class="text-center">
                     <img
-                      class="col-3"
-                      style="margin: auto"
+                      style="
+                        margin: auto;
+                        width: 100px;
+                        height: 100px;
+                      "
                       [src]="_backendURL + image.file_url"
                       [alt]="image.file_name"
                     />

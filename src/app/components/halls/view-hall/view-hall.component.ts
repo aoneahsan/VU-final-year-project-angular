@@ -149,10 +149,12 @@ export class ViewHallComponent implements OnInit, OnDestroy {
         .addHallImage(this.hall.id, formData)
         .subscribe(
           (res) => {
+            this.processingHallGalleryRequest = false;
             console.log("ViewHallComponent == addHallImage == res = ", res);
             this.getHallData(this.hall.id);
           },
           (err) => {
+            this.processingHallGalleryRequest = false;
             console.log("ViewHallComponent == addHallImage == err = ", err);
           }
         );
@@ -162,13 +164,14 @@ export class ViewHallComponent implements OnInit, OnDestroy {
   }
 
   deleteHallImage(image: HallGalleryItem) {
+    this.processingHallGalleryRequest = true;
     this.addHallImageSub = this._hallManagerService
       .deleteHallImage(this.hall.id, image.id)
       .subscribe(
         (res) => {
+          this.processingHallGalleryRequest = false;
           console.log("ViewHallComponent == addHallImage == res = ", res);
           this.getHallData(this.hall.id);
-          this.processingHallGalleryRequest = false;
         },
         (err) => {
           this.processingHallGalleryRequest = false;
