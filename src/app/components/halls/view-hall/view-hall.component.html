@@ -193,11 +193,54 @@
     </ng-container>
     <ng-container>
       <div class="card mt-4">
-        <img class="card-img-top" src="holder.js/100x180/" alt="">
-        <div class="card-body">
-          <h4 class="card-title">Title</h4>
-          <p class="card-text">Text</p>
+        <div class="card-header">
+          <div class="row">
+            <div class="col-6">Hall Images</div>
+            <div class="col-6 text-right">
+              <button class="btn btn-default" (click)="addHallImageInput.click()">Add Image</button>
+              <input
+              #addHallImageInput
+                type="file"
+                class="form-control"
+                (change)="onFileSelected($event)"
+                ngModel
+                id="profile_image"
+                name="file"
+              />
+            </div>
+          </div>
         </div>
+        <div class="card-body">
+          <ng-container *ngIf="hallImages">
+            <table class="table" *ngIf="hallImages?.length > 0">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Image</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let image of hallImages; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td><img [src]="image" [alt]="image" /></td>
+                  <td>
+                    <button
+                      class="btn btn-danger btn-sm"
+                      (click)="deleteHallImage()"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ng-container>
+          <ng-container *ngIf="!hallImages">
+            No Images Found, Try adding some :]
+          </ng-container>
+        </div>
+        <div class="card-footer text-muted">Footer</div>
       </div>
     </ng-container>
     <div *ngIf="!userData.is_approved" class="text-center">

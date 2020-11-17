@@ -48,4 +48,17 @@ export class HallManagerService {
             this._systemService.getApiRootURL() + `hall-manager/halls/${id}`
         );
     }
+
+    addHallImage(hallID, data) {
+        return this._http.post<any>(
+            this._systemService.getApiRootURL() + `hall-manager/halls/${hallID}/gallery`,
+            data
+        );
+    }
+
+    deleteHallImage(hallID, imageID) {
+        return this._http.delete<any>(
+            this._systemService.getApiRootURL() + `hall-manager/halls/${hallID}/gallery/${imageID}`
+        );
+    }
 }

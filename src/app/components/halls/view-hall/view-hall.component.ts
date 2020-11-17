@@ -25,9 +25,12 @@ export class ViewHallComponent implements OnInit, OnDestroy {
   private formSubmitSub: Subscription;
 
   hall: HallDetailInterface = null;
+  hallImages: any = null;
   hallID = null;
   userData: User;
   formSubmited: boolean = false;
+  file: File;
+  processingHttpRequest: boolean = false;
 
   constructor(
     private _systemService: SystemService,
@@ -100,6 +103,35 @@ export class ViewHallComponent implements OnInit, OnDestroy {
         }
       );
     }
+  }
+
+  // file uploading
+  onFileSelected(selectedFile) {
+    console.log(selectedFile.target.files[0].type.match(/image\/*/));
+    if (selectedFile.target.files[0].size > 2000000) {
+      alert("Max file size is 2MB.");
+    }
+    else {
+      this.file = null;
+      this.file = <File>selectedFile.target.files[0];
+    }
+  }
+
+  uploadHallImage() {
+    this.processingHttpRequest = true;
+    const formData = new FormData();
+    if (!!this.file) {
+      formData.append('profile_image', this.file);
+      console.log("this.file = ", this.file);
+      this.updateProfileImage(formData);
+    }
+    else {
+      this.updateProfile();
+    }
+  }
+
+  deleteHallImage(image) {
+
   }
 
   ngOnDestroy(): void {
