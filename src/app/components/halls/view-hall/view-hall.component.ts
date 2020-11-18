@@ -14,6 +14,8 @@ import { HallDetailInterface } from "src/app/interfaces/hall/hall-detail.interfa
 import { HallFeatureItem } from "./../../../interfaces/hall/hall-feature-item.interface";
 import { HallFoodItem } from "./../../../interfaces/hall/hall-food-item.interface";
 import { HallGalleryItem } from "./../../../interfaces/hall/hall-gallery-item.interface";
+import { AddHallFoodItemComponent } from "./add-hall-food-item/add-hall-food-item.component";
+import { AddHallFeatureItemComponent } from "./add-hall-feature-item/add-hall-feature-item.component";
 
 @Component({
   selector: "app-view-hall",
@@ -34,11 +36,7 @@ export class ViewHallComponent implements OnInit, OnDestroy {
   private formSubmitSub: Subscription;
   private addHallImageSub: Subscription;
   private deleteHallImageSub: Subscription;
-  private addHallFoodItemSub: Subscription;
-  private updateHallFoodItemSub: Subscription;
   private deleteHallFoodItemSub: Subscription;
-  private addHallFeatureItemSub: Subscription;
-  private updateHallFeatureItemSub: Subscription;
   private deleteHallFeatureItemSub: Subscription;
 
   hall: HallDetailInterface = null;
@@ -49,6 +47,8 @@ export class ViewHallComponent implements OnInit, OnDestroy {
   userData: User;
   formSubmited: boolean = false;
   processingHallGalleryRequest: boolean = false;
+  processingHallFoodRequest: boolean = false;
+  processingHallFeatureRequest: boolean = false;
 
   constructor(
     private _systemService: SystemService,
@@ -170,27 +170,149 @@ export class ViewHallComponent implements OnInit, OnDestroy {
       .subscribe(
         (res) => {
           this.processingHallGalleryRequest = false;
-          console.log("ViewHallComponent == addHallImage == res = ", res);
+          console.log("ViewHallComponent == deleteHallImage == res = ", res);
           this.getHallData(this.hall.id);
         },
         (err) => {
           this.processingHallGalleryRequest = false;
-          console.log("ViewHallComponent == addHallImage == err = ", err);
+          console.log("ViewHallComponent == deleteHallImage == err = ", err);
         }
       );
   }
 
-  addHallFoodItem() {}
+  addHallFoodItem() {
+    this.processingHallFoodRequest = true;
+    const modalRef = this._modalService.open(AddHallFoodItemComponent);
+    modalRef.componentInstance.isCreating = true;
+    modalRef.componentInstance.hallDetails = this.hall;
+    modalRef.componentInstance.hallFoodItems = this.hallFoodItems;
+    modalRef.result.then(
+      (result) => {
+        this.processingHallFoodRequest = false;
+        if (result != "cancel" && result != "close") {
+          // console.log("ViewHallComponent == addHallFoodItem == result = ", result);
+        }
+      },
+      (reason) => {
+        this.processingHallFoodRequest = false;
+        console.log(
+          "ViewHallComponent == addHallFoodItem == reason = ",
+          reason
+        );
+      }
+    );
+  }
 
-  editHallFoodItem(item: HallFoodItem) {}
+  editHallFoodItem(item: HallFoodItem) {
+    this.processingHallFoodRequest = true;
+    const modalRef = this._modalService.open(AddHallFoodItemComponent);
+    modalRef.componentInstance.isCreating = false;
+    modalRef.componentInstance.foodItem = item;
+    modalRef.componentInstance.hallDetails = this.hall;
+    modalRef.componentInstance.hallFoodItems = this.hallFoodItems;
+    modalRef.result.then(
+      (result) => {
+        this.processingHallFoodRequest = false;
+        if (result != "cancel" && result != "close") {
+          // console.log("ViewHallComponent == editHallFoodItem == result = ", result);
+        }
+      },
+      (reason) => {
+        this.processingHallFoodRequest = false;
+        console.log(
+          "ViewHallComponent == editHallFoodItem == reason = ",
+          reason
+        );
+      }
+    );
+  }
 
-  deleteHallFoodItem(item: HallFoodItem) {}
+  deleteHallFoodItem(item: HallFoodItem) {
+    this.processingHallFoodRequest = true;
+    this.deleteHallFoodItemSub = this._hallManagerService
+      .deleteHallFoodItem(this.hall.id, item)
+      .subscribe(
+        (res) => {
+          this.processingHallFoodRequest = false;
+          this.hallFoodItems = this.hallFoodItems.filter((el) => el.id != item.id);
+          // console.log("ViewHallComponent == deleteHallFoodItem == res = ", res);
+        },
+        (err) => {
+          this.processingHallFoodRequest = false;
+          console.log("ViewHallComponent == deleteHallFoodItem == err = ", err);
+        }
+      );
+  }
 
-  addHallFeatureItem() {}
+  addHallFeatureItem() {
+    this.processingHallFeatureRequest = true;
+    const modalRef = this._modalService.open(AddHallFeatureItemComponent);
+    modalRef.componentInstance.isCreating = true;
+    modalRef.componentInstance.hallDetails = this.hall;
+    modalRef.componentInstance.hallFeatureItems = this.hallFeatureItems;
+    modalRef.result.then(
+      (result) => {
+        this.processingHallFeatureRequest = false;
+        if (result != "cancel" && result != "close") {
+          // console.log("ViewHallComponent == addHallFeatureItem == result = ", result);
+        }
+      },
+      (reason) => {
+        this.processingHallFeatureRequest = false;
+        console.log(
+          "ViewHallComponent == addHallFeatureItem == reason = ",
+          reason
+        );
+      }
+    );
+  }
 
-  editHallFeatureItem(item: HallFeatureItem) {}
+  editHallFeatureItem(item: HallFeatureItem) {
+    this.processingHallFeatureRequest = true;
+    const modalRef = this._modalService.open(AddHallFeatureItemComponent);
+    modalRef.componentInstance.isCreating = false;
+    modalRef.componentInstance.FeatureItem = item;
+    modalRef.componentInstance.hallDetails = this.hall;
+    modalRef.componentInstance.hallFeatureItems = this.hallFeatureItems;
+    modalRef.result.then(
+      (result) => {
+        this.processingHallFeatureRequest = false;
+        if (result != "cancel" && result != "close") {
+          // console.log("ViewHallComponent == editHallFeatureItem == result = ", result);
+        }
+      },
+      (reason) => {
+        this.processingHallFeatureRequest = false;
+        console.log(
+          "ViewHallComponent == editHallFeatureItem == reason = ",
+          reason
+        );
+      }
+    );
+  }
 
-  deleteHallFeatureItem(item: HallFeatureItem) {}
+  deleteHallFeatureItem(item: HallFeatureItem) {
+    this.processingHallFeatureRequest = true;
+    this.deleteHallFeatureItemSub = this._hallManagerService
+      .deleteHallFeatureItem(this.hall.id, item)
+      .subscribe(
+        (res) => {
+          this.processingHallFeatureRequest = false;
+          this.hallFeatureItems = this.hallFeatureItems.filter((el) => el.id != item.id);
+          // console.log(
+          //   "ViewHallComponent == deleteHallFeatureItem == res = ",
+          //   res
+          // );
+        },
+        (err) => {
+          this.processingHallFeatureRequest = false;
+          console.log(
+            "ViewHallComponent == deleteHallFeatureItem == err = ",
+            err
+          );
+        }
+      );
+  }
 
   ngOnDestroy(): void {
     if (this._loadingStatus_Sub) {
@@ -214,20 +336,8 @@ export class ViewHallComponent implements OnInit, OnDestroy {
     if (this.deleteHallImageSub) {
       this.deleteHallImageSub.unsubscribe();
     }
-    if (this.addHallFoodItemSub) {
-      this.addHallFoodItemSub.unsubscribe();
-    }
-    if (this.updateHallFoodItemSub) {
-      this.updateHallFoodItemSub.unsubscribe();
-    }
     if (this.deleteHallFoodItemSub) {
       this.deleteHallFoodItemSub.unsubscribe();
-    }
-    if (this.addHallFeatureItemSub) {
-      this.addHallFeatureItemSub.unsubscribe();
-    }
-    if (this.updateHallFeatureItemSub) {
-      this.updateHallFeatureItemSub.unsubscribe();
     }
     if (this.deleteHallFeatureItemSub) {
       this.deleteHallFeatureItemSub.unsubscribe();

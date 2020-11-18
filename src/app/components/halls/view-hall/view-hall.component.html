@@ -221,11 +221,7 @@
                   <td>{{ image.id }}</td>
                   <td colspan="3" class="text-center">
                     <img
-                      style="
-                        margin: auto;
-                        width: 100px;
-                        height: 100px;
-                      "
+                      style="margin: auto; width: 100px; height: 100px"
                       [src]="_backendURL + image.file_url"
                       [alt]="image.file_name"
                     />
@@ -278,14 +274,17 @@
                   <td>{{ i + 1 }}</td>
                   <td>{{ item.title }}</td>
                   <td>{{ item.price | currency }}</td>
+                  <td>{{ item.is_available ? "Yes" : "No" }}</td>
                   <td colspan="2">
                     <button
-                      class="btn btn-danger btn-sm"
+                      [disabled]="processingHallFoodRequest"
+                      class="btn btn-info btn-sm mr-3"
                       (click)="editHallFoodItem(item)"
                     >
-                      Delete
+                      Edit
                     </button>
                     <button
+                      [disabled]="processingHallFoodRequest"
                       class="btn btn-danger btn-sm"
                       (click)="deleteHallFoodItem(item)"
                     >
@@ -336,14 +335,17 @@
                   <td>{{ item.title }}</td>
                   <td>{{ item.description }}</td>
                   <td>{{ item.price | currency }}</td>
+                  <td>{{ item.is_available ? "Yes" : "No" }}</td>
                   <td colspan="2">
                     <button
-                      class="btn btn-danger btn-sm"
+                      [disabled]="processingHallFeatureRequest"
+                      class="btn btn-info btn-sm mr-3"
                       (click)="editHallFeatureItem(item)"
                     >
-                      Delete
+                      Edit
                     </button>
                     <button
+                      [disabled]="processingHallFeatureRequest"
                       class="btn btn-danger btn-sm"
                       (click)="deleteHallFeatureItem(item)"
                     >

@@ -38,6 +38,8 @@ import { EditHallComponent } from './components/halls/edit-hall/edit-hall.compon
 import { ManageHallManagersComponent } from './admin-panel/manage-hall-managers/manage-hall-managers.component';
 import { ProfileUpdateModalComponent } from './components/user/profile-update-modal/profile-update-modal.component';
 import { ViewHallComponent } from './components/halls/view-hall/view-hall.component';
+import { AddHallFoodItemComponent } from './components/halls/view-hall/add-hall-food-item/add-hall-food-item.component';
+import { AddHallFeatureItemComponent } from './components/halls/view-hall/add-hall-feature-item/add-hall-feature-item.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import { ViewHallComponent } from './components/halls/view-hall/view-hall.compon
     EditHallComponent,
     ManageHallManagersComponent,
     ProfileUpdateModalComponent,
-    ViewHallComponent
+    ViewHallComponent,
+    AddHallFoodItemComponent,
+    AddHallFeatureItemComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,7 @@
 <ng-container>
   <div class="modal-content">
     <div class="modal-header">
-      <h2 class="modal-title m-0">Deliver Completed Work</h2>
+      <h2 class="modal-title m-0">Update User Profile</h2>
       <button
         type="button"
         class="close border-0"
@@ -114,21 +114,10 @@
     </div>
     <!-- After Successfull request -->
     <div class="modal-body text-center text-success" *ngIf="requestSuccessfull">
-      <h3>Delivery Placed Successfully.</h3>
+      <h3>Profile Updated Successfully.</h3>
       <button class="btn btn-primary lift btn-sm" (click)="activeModal.close()">
         Okay
       </button>
     </div>
-    <!-- <div class="modal-footer" *ngIf="!requestSuccessfull">
-      <button
-        type="button"
-        class="btn btn-outline-primary btn-sm lift m-auto"
-        (click)="onSubmit('publish')"
-        *ngIf="!processingHttpRequest"
-      >
-        Update
-      </button>
-      <app-loading-spinner *ngIf="processingHttpRequest"></app-loading-spinner>
-    </div> -->
   </div>
 </ng-container>

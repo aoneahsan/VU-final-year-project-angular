@@ -7,6 +7,8 @@ import { SystemService } from '../system.service';
 
 // Interfaces
 import { HallDetailInterface } from 'src/app/interfaces/hall/hall-detail.interface';
+import { HallFoodItem } from 'src/app/interfaces/hall/hall-food-item.interface';
+import { HallFeatureItem } from 'src/app/interfaces/hall/hall-feature-item.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -59,6 +61,46 @@ export class HallManagerService {
     deleteHallImage(hallID, imageID) {
         return this._http.delete<any>(
             this._systemService.getApiRootURL() + `hall-manager/halls/${hallID}/gallery/${imageID}`
+        );
+    }
+
+    addHallFoodItem(hallID, data) {
+        return this._http.post<any>(
+            this._systemService.getApiRootURL() + `hall-manager/halls/${hallID}/food`,
+            data
+        );
+    }
+
+    updateHallFoodItem(hallID, itemData: HallFoodItem) {
+        return this._http.put<any>(
+            this._systemService.getApiRootURL() + `hall-manager/halls/${hallID}/food/${itemData.id}`,
+            itemData
+        );
+    }
+
+    deleteHallFoodItem(hallID, itemData: HallFoodItem) {
+        return this._http.delete<any>(
+            this._systemService.getApiRootURL() + `hall-manager/halls/${hallID}/food/${itemData.id}`
+        );
+    }
+
+    addHallFeatureItem(hallID, data) {
+        return this._http.post<any>(
+            this._systemService.getApiRootURL() + `hall-manager/halls/${hallID}/feature`,
+            data
+        );
+    }
+
+    updateHallFeatureItem(hallID, itemData: HallFeatureItem) {
+        return this._http.put<any>(
+            this._systemService.getApiRootURL() + `hall-manager/halls/${hallID}/feature/${itemData.id}`,
+            itemData
+        );
+    }
+
+    deleteHallFeatureItem(hallID, itemData: HallFeatureItem) {
+        return this._http.delete<any>(
+            this._systemService.getApiRootURL() + `hall-manager/halls/${hallID}/feature/${itemData.id}`
         );
     }
 }
