@@ -1,18 +1,47 @@
 <ng-container *ngIf="!_loadingStatus">
   <app-header></app-header>
   <div class="container py-4">
-    <div class="list-group">
-      <a href="#" class="list-group-item list-group-item-action active"
-        >Active item</a
-      >
-      <a href="#" class="list-group-item list-group-item-action">Item</a>
-      <a href="#" class="list-group-item list-group-item-action disabled"
-        >Disabled item</a
-      >
+    <div class="card">
+      <div class="card-header">
+        <div class="row">Bookings</div>
+      </div>
+      <div class="card-body">
+        <ng-container *ngIf="bookings">
+          <table class="table" *ngIf="bookings?.length > 0">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Event Type</th>
+                <th>No. of Persons</th>
+                <th>Booking Start Time</th>
+                <th>Booking End Time</th>
+                <th>Placed At</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let booking of bookings; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ booking.user.name }}</td>
+                <td>{{ booking.event_type }}</td>
+                <td>{{ booking.no_of_persons }}</td>
+                <td>{{ booking.book_time_from }}</td>
+                <td>{{ booking.book_time_to }}</td>
+                <td>{{ booking.created_at | date }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        <ng-container *ngIf="!bookings || bookings?.length < 1">
+          <div class="text-center">
+            No Bookings Found, Try coming back later :]
+          </div>
+        </ng-container>
+      </div>
     </div>
   </div>
   <app-footer></app-footer>
 </ng-container>
-<div style="height: 100vh;" *ngIf="_loadingStatus">
+<div style="height: 100vh" *ngIf="_loadingStatus">
   <app-loading-spinner></app-loading-spinner>
 </div>

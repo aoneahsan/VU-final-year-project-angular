@@ -12,7 +12,6 @@ import { HallManagerService } from "src/app/services/hall-manager/hall-manager.s
 })
 export class AddHallFeatureItemComponent implements OnInit, OnDestroy {
   @Input() hallDetails: HallDetailInterface;
-  @Input() hallFeatureItems: HallFeatureItem[];
   @Input() isCreating: boolean = false;
   @Input() FeatureItem: HallFeatureItem = {
     title: "",
@@ -37,7 +36,9 @@ export class AddHallFeatureItemComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   onSubmit() {
-    this.isCreating ? this.onCreateHallFeatureItem() : this.onUpdateHallFeatureItem();
+    this.isCreating
+      ? this.onCreateHallFeatureItem()
+      : this.onUpdateHallFeatureItem();
   }
 
   onCreateHallFeatureItem() {
@@ -50,7 +51,7 @@ export class AddHallFeatureItemComponent implements OnInit, OnDestroy {
             res
           );
           this.processingHttpRequest = false;
-          this.hallFeatureItems.push(res.data);
+          this.hallDetails.features.push(res.data);
           this.activeModal.dismiss();
         },
         (err) => {
@@ -74,14 +75,14 @@ export class AddHallFeatureItemComponent implements OnInit, OnDestroy {
             res
           );
           this.processingHttpRequest = false;
-          const itemsCopy = this.hallFeatureItems.map((el) => {
+          const itemsCopy = this.hallDetails.features.map((el) => {
             if (el.id == this.FeatureItem.id) {
               return res.data;
             } else {
               return el;
             }
           });
-          this.hallFeatureItems = itemsCopy;
+          this.hallDetails.features = itemsCopy;
           this.activeModal.dismiss();
         },
         (err) => {

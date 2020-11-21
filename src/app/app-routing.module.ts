@@ -27,6 +27,7 @@ import { CustomerGuard } from './route-guards/customer/customer.service';
 import { EditHallComponent } from './components/halls/edit-hall/edit-hall.component';
 import { ManageHallManagersComponent } from './admin-panel/manage-hall-managers/manage-hall-managers.component';
 import { ViewHallComponent } from './components/halls/view-hall/view-hall.component';
+import { BookHallComponent } from './components/book-hall/book-hall.component';
 
 const routes: Routes = [
   {
@@ -87,6 +88,11 @@ const routes: Routes = [
   {
     path: 'search-halls',
     component: SearchHallComponent,
+    canActivate: [CustomerGuard]
+  },
+  {
+    path: 'search-halls/:hallId/book',
+    component: BookHallComponent,
     canActivate: [CustomerGuard]
   },
   {

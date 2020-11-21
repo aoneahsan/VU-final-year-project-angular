@@ -10,10 +10,14 @@ import { SystemService } from "src/app/services/system.service";
 
 import { User } from "src/app/models/auth/user-model";
 
-import { HallDetailInterface } from "src/app/interfaces/hall/hall-detail.interface";
-import { HallFeatureItem } from "./../../../interfaces/hall/hall-feature-item.interface";
 import { HallFoodItem } from "./../../../interfaces/hall/hall-food-item.interface";
+import { HallDetailInterface } from "src/app/interfaces/hall/hall-detail.interface";
+import { AddHallTimingComponent } from "./add-hall-timing/add-hall-timing.component";
+import { HallBookingInterface } from "src/app/interfaces/hall/hall-booking.interface";
+import { HallTimingInterface } from "./../../../interfaces/hall/hall-timing.interface";
+import { HallFeedbackInterface } from "src/app/interfaces/hall/hall-feedback.interface";
 import { HallGalleryItem } from "./../../../interfaces/hall/hall-gallery-item.interface";
+import { HallFeatureItem } from "./../../../interfaces/hall/hall-feature-item.interface";
 import { AddHallFoodItemComponent } from "./add-hall-food-item/add-hall-food-item.component";
 import { AddHallFeatureItemComponent } from "./add-hall-feature-item/add-hall-feature-item.component";
 
@@ -38,17 +42,18 @@ export class ViewHallComponent implements OnInit, OnDestroy {
   private deleteHallImageSub: Subscription;
   private deleteHallFoodItemSub: Subscription;
   private deleteHallFeatureItemSub: Subscription;
+  private deleteHallTimingSub: Subscription;
+  private updateHallBookingSub: Subscription;
 
   hall: HallDetailInterface = null;
-  hallImages: HallGalleryItem[] = null;
-  hallFoodItems: HallFoodItem[] = null;
-  hallFeatureItems: HallFeatureItem[] = null;
   hallID = null;
   userData: User;
   formSubmited: boolean = false;
   processingHallGalleryRequest: boolean = false;
   processingHallFoodRequest: boolean = false;
   processingHallFeatureRequest: boolean = false;
+  processingHallTimingRequest: boolean = false;
+  processingHallBookingRequest: boolean = false;
 
   constructor(
     private _systemService: SystemService,
@@ -97,10 +102,7 @@ export class ViewHallComponent implements OnInit, OnDestroy {
       (res) => {
         console.log("EditHallComponent == getHall == res = ", res);
         if (!!res.data) {
-          this.hall = res.data.hall;
-          this.hallImages = res.data.images;
-          this.hallFoodItems = res.data.food_items;
-          this.hallFeatureItems = res.data.features;
+          this.hall = res.data;
         }
       },
       (err) => {
@@ -185,7 +187,6 @@ export class ViewHallComponent implements OnInit, OnDestroy {
     const modalRef = this._modalService.open(AddHallFoodItemComponent);
     modalRef.componentInstance.isCreating = true;
     modalRef.componentInstance.hallDetails = this.hall;
-    modalRef.componentInstance.hallFoodItems = this.hallFoodItems;
     modalRef.result.then(
       (result) => {
         this.processingHallFoodRequest = false;
@@ -209,7 +210,6 @@ export class ViewHallComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.isCreating = false;
     modalRef.componentInstance.foodItem = item;
     modalRef.componentInstance.hallDetails = this.hall;
-    modalRef.componentInstance.hallFoodItems = this.hallFoodItems;
     modalRef.result.then(
       (result) => {
         this.processingHallFoodRequest = false;
@@ -234,7 +234,9 @@ export class ViewHallComponent implements OnInit, OnDestroy {
       .subscribe(
         (res) => {
           this.processingHallFoodRequest = false;
-          this.hallFoodItems = this.hallFoodItems.filter((el) => el.id != item.id);
+          this.hall.food_items = this.hall.food_items.filter(
+            (el) => el.id != item.id
+          );
           // console.log("ViewHallComponent == deleteHallFoodItem == res = ", res);
         },
         (err) => {
@@ -249,7 +251,6 @@ export class ViewHallComponent implements OnInit, OnDestroy {
     const modalRef = this._modalService.open(AddHallFeatureItemComponent);
     modalRef.componentInstance.isCreating = true;
     modalRef.componentInstance.hallDetails = this.hall;
-    modalRef.componentInstance.hallFeatureItems = this.hallFeatureItems;
     modalRef.result.then(
       (result) => {
         this.processingHallFeatureRequest = false;
@@ -273,7 +274,6 @@ export class ViewHallComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.isCreating = false;
     modalRef.componentInstance.FeatureItem = item;
     modalRef.componentInstance.hallDetails = this.hall;
-    modalRef.componentInstance.hallFeatureItems = this.hallFeatureItems;
     modalRef.result.then(
       (result) => {
         this.processingHallFeatureRequest = false;
@@ -298,7 +298,9 @@ export class ViewHallComponent implements OnInit, OnDestroy {
       .subscribe(
         (res) => {
           this.processingHallFeatureRequest = false;
-          this.hallFeatureItems = this.hallFeatureItems.filter((el) => el.id != item.id);
+          this.hall.features = this.hall.features.filter(
+            (el) => el.id != item.id
+          );
           // console.log(
           //   "ViewHallComponent == deleteHallFeatureItem == res = ",
           //   res
@@ -310,6 +312,102 @@ export class ViewHallComponent implements OnInit, OnDestroy {
             "ViewHallComponent == deleteHallFeatureItem == err = ",
             err
           );
+        }
+      );
+  }
+
+  addHallTiming() {
+    this.processingHallTimingRequest = true;
+    const modalRef = this._modalService.open(AddHallTimingComponent);
+    modalRef.componentInstance.isCreating = true;
+    modalRef.componentInstance.hallDetails = this.hall;
+    modalRef.result.then(
+      (result) => {
+        this.processingHallTimingRequest = false;
+        if (result != "cancel" && result != "close") {
+          // console.log("ViewHallComponent == addHallFeatureItem == result = ", result);
+        }
+      },
+      (reason) => {
+        this.processingHallTimingRequest = false;
+        console.log(
+          "ViewHallComponent == addHallFeatureItem == reason = ",
+          reason
+        );
+      }
+    );
+  }
+
+  editHallTiming(item: HallTimingInterface) {
+    this.processingHallTimingRequest = true;
+    const modalRef = this._modalService.open(AddHallTimingComponent);
+    modalRef.componentInstance.isCreating = false;
+    modalRef.componentInstance.timing = item;
+    modalRef.componentInstance.hallDetails = this.hall;
+    modalRef.result.then(
+      (result) => {
+        this.processingHallTimingRequest = false;
+        if (result != "cancel" && result != "close") {
+          // console.log("ViewHallComponent == editHallTimingItem == result = ", result);
+        }
+      },
+      (reason) => {
+        this.processingHallTimingRequest = false;
+        console.log(
+          "ViewHallComponent == editHallTimingItem == reason = ",
+          reason
+        );
+      }
+    );
+  }
+
+  deleteHallTimingItem(item: HallTimingInterface) {
+    this.processingHallTimingRequest = true;
+    this.deleteHallTimingSub = this._hallManagerService
+      .deleteHallTiming(this.hall.id, item)
+      .subscribe(
+        (res) => {
+          this.processingHallTimingRequest = false;
+          this.hall.timings = this.hall.timings.filter(
+            (el) => el.id != item.id
+          );
+          // console.log(
+          //   "ViewHallComponent == deleteHallTimingItem == res = ",
+          //   res
+          // );
+        },
+        (err) => {
+          this.processingHallTimingRequest = false;
+          console.log(
+            "ViewHallComponent == deleteHallTimingItem == err = ",
+            err
+          );
+        }
+      );
+  }
+
+  updateHallBooking(
+    item: HallBookingInterface,
+    status: "approved" | "disapproved"
+  ) {
+    this.processingHallBookingRequest = true;
+    item.status = status;
+    this.updateHallBookingSub = this._hallManagerService
+      .updateBooking(this.hall.id, item)
+      .subscribe(
+        (res) => {
+          this.processingHallBookingRequest = false;
+          this.hall.bookings = this.hall.bookings.map((el) => {
+            if (el.id == item.id) {
+              return item;
+            } else {
+              return el;
+            }
+          });
+        },
+        (err) => {
+          this.processingHallBookingRequest = false;
+          console.log("ViewHallComponent == approveHallBooking == err = ", err);
         }
       );
   }
@@ -341,6 +439,12 @@ export class ViewHallComponent implements OnInit, OnDestroy {
     }
     if (this.deleteHallFeatureItemSub) {
       this.deleteHallFeatureItemSub.unsubscribe();
+    }
+    if (this.deleteHallTimingSub) {
+      this.deleteHallTimingSub.unsubscribe();
+    }
+    if (this.updateHallBookingSub) {
+      this.updateHallBookingSub.unsubscribe();
     }
   }
 }

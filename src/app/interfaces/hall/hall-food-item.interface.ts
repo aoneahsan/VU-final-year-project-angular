@@ -1,6 +1,6 @@
 export interface HallFoodItem {
-    id?,
-    title?,
-    price?,
-    is_available?
-};
+  id?;
+  title?;
+  price?;
+  is_available?;
+}

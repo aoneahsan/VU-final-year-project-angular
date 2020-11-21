@@ -1,7 +1,7 @@
 <ng-container *ngIf="!_loadingStatus">
   <app-header></app-header>
   <div class="container py-4 table-responsive">
-    <form #f="ngForm" (ngSubmit)="onSubmit(f.value)" >
+    <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
       <div class="row">
         <div class="col-12">
           <h3 class="text-center">Apply Filters to search halls.</h3>
@@ -19,6 +19,7 @@
           <input
             type="number"
             minlength="0"
+            min="0"
             name="minprice"
             class="form-control"
             ngModel
@@ -29,6 +30,7 @@
           <input
             type="number"
             minlength="0"
+            min="0"
             name="maxprice"
             class="form-control"
             ngModel
@@ -36,22 +38,32 @@
           />
         </div>
         <div class="col-3 mt-3">
-          <input
-            type="text"
-            name="location"
+          <select
             class="form-control"
+            name="location"
             ngModel
-            placeholder="Location"
-          />
+            required
+            id="location"
+          >
+            <option value="">Select Location</option>
+            <option value="lahore">Lahore</option>
+            <option value="karachi">Karachi</option>
+            <option value="pakistan">Pakistan</option>
+          </select>
         </div>
         <div class="col-3 mt-3">
-          <input
-            type="text"
-            name="event_type"
+          <select
             class="form-control"
+            name="event_type"
+            id="event_type"
             ngModel
-            placeholder="Event Type"
-          />
+            required
+          >
+            <option value="">Select Event Type</option>
+            <option>Party</option>
+            <option>Birthday</option>
+            <option>Mariage</option>
+          </select>
         </div>
         <div class="col-3 mt-3">
           <input
@@ -63,7 +75,9 @@
           />
         </div>
         <div class="col-12 mt-3">
-          <button type="submit" class="btn btn-success btn-sm">Apply Filters</button>
+          <button type="submit" class="btn btn-success btn-sm">
+            Apply Filters
+          </button>
         </div>
       </div>
     </form>
@@ -95,7 +109,12 @@
           <td>{{ hall.hall_size }}</td>
           <td>{{ hall.is_available ? "Available" : "Not Available" }}</td>
           <td>
-            <button class="btn btn-outline-primary btn-sm">Book</button>
+            <button
+              class="btn btn-outline-primary btn-sm"
+              (click)="bookHall(hall)"
+            >
+              Book
+            </button>
           </td>
         </tr>
       </tbody>
@@ -106,6 +125,6 @@
   </div>
   <app-footer></app-footer>
 </ng-container>
-<div style="height: 100vh;" *ngIf="_loadingStatus">
+<div style="height: 100vh" *ngIf="_loadingStatus">
   <app-loading-spinner></app-loading-spinner>
 </div>

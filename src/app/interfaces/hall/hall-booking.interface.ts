@@ -1,9 +1,8 @@
-export interface BookingDetailInterface {
+export interface HallBookingInterface {
   id?;
   user_id?;
   hall_id?;
-  user?: { id?; name?; email?; profile_image? };
-  hall?: { id?; name?; description? };
+  user?: { id?; name?; email? };
   event_type?;
   no_of_persons?;
   booking_time?;
@@ -11,5 +10,6 @@ export interface BookingDetailInterface {
   book_time_to?;
   menu?;
   price?;
+  status?: 'pending' | 'approved' | 'disapproved';
   created_at?;
 }

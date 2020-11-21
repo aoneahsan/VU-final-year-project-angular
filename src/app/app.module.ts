@@ -40,6 +40,7 @@ import { ProfileUpdateModalComponent } from './components/user/profile-update-mo
 import { ViewHallComponent } from './components/halls/view-hall/view-hall.component';
 import { AddHallFoodItemComponent } from './components/halls/view-hall/add-hall-food-item/add-hall-food-item.component';
 import { AddHallFeatureItemComponent } from './components/halls/view-hall/add-hall-feature-item/add-hall-feature-item.component';
+import { AddHallTimingComponent } from './components/halls/view-hall/add-hall-timing/add-hall-timing.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { AddHallFeatureItemComponent } from './components/halls/view-hall/add-ha
     ProfileUpdateModalComponent,
     ViewHallComponent,
     AddHallFoodItemComponent,
-    AddHallFeatureItemComponent
+    AddHallFeatureItemComponent,
+    AddHallTimingComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,68 @@
+<ng-container>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title m-0">
+        {{ isCreating ? "Add Time" : "Edit Time" }}
+      </h2>
+      <button
+        type="button"
+        class="close border-0"
+        data-dismiss="modal"
+        aria-label="Close"
+        (click)="activeModal.close()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <!-- For Creating Item -->
+    <div class="modal-body text-muted p-0" *ngIf="!requestSuccessfull">
+      <form class="border p-4" #form="ngForm" (submit)="onSubmit()">
+        <div class="form-group">
+          <label for="start_time" class="col-sm-1-12 col-form-label"
+            >Start Time</label
+          >
+          <div class="col-sm-1-12 w-100">
+            <input
+              type="time"
+              class="form-control"
+              name="start_time"
+              id="start_time"
+              [(ngModel)]="timing.start_time"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="end_timing">End Time</label>
+          <input
+            type="time"
+            [min]="timing.start_time"
+            class="form-control"
+            name="end_timing"
+            id="end_timing"
+            [(ngModel)]="timing.end_time"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <div class="col-12 p-0">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!form.valid && !processingHttpRequest"
+              *ngIf="!processingHttpRequest"
+            >
+              Submit
+            </button>
+            <app-loading-spinner
+              *ngIf="processingHttpRequest"
+            ></app-loading-spinner>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-body text-muted p-0" *ngIf="requestSuccessfull">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+  </div>
+</ng-container>

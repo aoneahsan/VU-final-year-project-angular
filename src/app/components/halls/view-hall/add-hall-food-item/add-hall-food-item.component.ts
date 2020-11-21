@@ -14,7 +14,6 @@ import { HallFoodItem } from "src/app/interfaces/hall/hall-food-item.interface";
 })
 export class AddHallFoodItemComponent implements OnInit, OnDestroy {
   @Input() hallDetails: HallDetailInterface;
-  @Input() hallFoodItems: HallFoodItem[];
   @Input() isCreating: boolean = false;
   @Input() foodItem: HallFoodItem = {
     title: "",
@@ -53,7 +52,7 @@ export class AddHallFoodItemComponent implements OnInit, OnDestroy {
             res
           );
           this.processingHttpRequest = false;
-          this.hallFoodItems.push(res.data);
+          this.hallDetails.food_items.push(res.data);
           this.activeModal.dismiss();
         },
         (err) => {
@@ -78,14 +77,14 @@ export class AddHallFoodItemComponent implements OnInit, OnDestroy {
             res
           );
           this.processingHttpRequest = false;
-          const itemsCopy = this.hallFoodItems.map((el) => {
+          const itemsCopy = this.hallDetails.food_items.map((el) => {
             if (el.id == this.foodItem.id) {
               return res.data;
             } else {
               return el;
             }
           });
-          this.hallFoodItems = itemsCopy;
+          this.hallDetails.food_items = itemsCopy;
           this.activeModal.dismiss();
         },
         (err) => {

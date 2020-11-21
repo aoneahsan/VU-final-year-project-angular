@@ -2,370 +2,559 @@
   <app-header></app-header>
   <div class="container py-4">
     <ng-container *ngIf="userData.is_approved && hall">
-      <form class="border p-4" #form="ngForm">
-        <div class="form-group">
-          <label for="name" class="col-sm-1-12 col-form-label">Hall Name</label>
-          <div class="col-sm-1-12 w-100">
-            <input
-              type="text"
-              class="form-control"
-              readonly
-              disabled
-              name="name"
-              id="name"
-              [(ngModel)]="hall.name"
-              required
-            />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="description" class="col-sm-1-12 col-form-label"
-            >Hall Description</label
-          >
-          <div class="col-sm-1-12 w-100">
-            <input
-              type="text"
-              class="form-control"
-              readonly
-              disabled
-              name="description"
-              id="description"
-              [(ngModel)]="hall.description"
-              required
-            />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="hall_size">Hall Size (No. of persons)</label>
-          <select
-            class="form-control"
-            readonly
-            disabled
-            name="hall_size"
-            id="hall_size"
-            [(ngModel)]="hall.hall_size"
-            required
-          >
-            <option value="">Select Hall Size</option>
-            <option>50</option>
-            <option>100</option>
-            <option>150</option>
-            <option>200</option>
-            <option>250</option>
-            <option>300</option>
-            <option>350</option>
-            <option>400</option>
-            <option>450</option>
-            <option>500</option>
-            <option>550</option>
-            <option>600</option>
-            <option>650</option>
-            <option>700</option>
-            <option>750</option>
-            <option>800</option>
-            <option>850</option>
-            <option>900</option>
-            <option>950</option>
-            <option>1000</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="event_type">Event Type</label>
-          <select
-            class="form-control"
-            readonly
-            disabled
-            name="event_type"
-            id="event_type"
-            [(ngModel)]="hall.event_type"
-            required
-          >
-            <option value="">Select Event Type</option>
-            <option value="party">Party</option>
-            <option value="birthday">Birthday</option>
-            <option value="mariage">Mariage</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="hall_rent">Hall Rent</label>
-          <input
-            type="number"
-            class="form-control"
-            readonly
-            disabled
-            name="hall_rent"
-            minlength="10"
-            id="hall_rent"
-            required
-            [(ngModel)]="hall.hall_rent"
-          />
-        </div>
-        <div class="form-group">
-          <label for="location">Hall Location</label>
-          <select
-            class="form-control"
-            readonly
-            disabled
-            name="location"
-            [(ngModel)]="hall.location"
-            required
-            id="location"
-          >
-            <option value="">Select Location</option>
-            <option value="lahore">Lahore</option>
-            <option value="karachi">Karachi</option>
-            <option value="pakistan">Pakistan</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="min_no_of_persons">Min # of Persons</label>
-          <input
-            type="number"
-            class="form-control"
-            readonly
-            disabled
-            name="min_no_of_persons"
-            minlength="10"
-            id="min_no_of_persons"
-            required
-            [(ngModel)]="hall.min_no_of_persons"
-          />
-        </div>
-        <div class="form-group">
-          <label for="hall_open_time">Hall Open Time</label>
-          <input
-            type="time"
-            class="form-control"
-            readonly
-            disabled
-            name="hall_open_time"
-            minlength="10"
-            id="hall_open_time"
-            required
-            [(ngModel)]="hall.open_time"
-          />
-        </div>
-        <div class="form-group">
-          <label for="hall_closed_time">Hall Closed Time</label>
-          <input
-            type="time"
-            class="form-control"
-            readonly
-            disabled
-            name="hall_closed_time"
-            minlength="10"
-            id="hall_closed_time"
-            required
-            [(ngModel)]="hall.closed_time"
-          />
-        </div>
-        <div class="form-check">
-          <label class="form-check-label">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              readonly
-              disabled
-              name="is_available"
-              id="is_available"
-              [(ngModel)]="hall.is_available"
-              value="checkedValue"
-              checked
-            />
-            Is Available (check if hall is currently available)
-          </label>
-        </div>
-      </form>
-    </ng-container>
-    <!-- Hall Gallery -->
-    <ng-container>
-      <div class="card mt-4">
-        <div class="card-header">
-          <div class="row">
-            <div class="col-6">Hall Images</div>
-            <div class="col-6 text-right">
-              <button
-                [disabled]="processingHallGalleryRequest"
-                class="btn btn-default"
-                (click)="addHallImageInput.click()"
-              >
-                Add Image
-              </button>
-              <input
-                #addHallImageInput
-                type="file"
-                accept="image/*"
-                (change)="onFileSelected($event)"
-                ngModel
-                style="position: fixed; top: -1000%; visibility: hidden"
-                id="profile_image"
-                name="file"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <ng-container *ngIf="hallImages">
-            <table class="table" *ngIf="hallImages?.length > 0">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th></th>
-                  <th>Image</th>
-                  <th></th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let image of hallImages; let i = index">
-                  <td>{{ image.id }}</td>
-                  <td colspan="3" class="text-center">
-                    <img
-                      style="margin: auto; width: 100px; height: 100px"
-                      [src]="_backendURL + image.file_url"
-                      [alt]="image.file_name"
+      <ul ngbNav #nav="ngbNav" class="nav-tabs">
+        <!-- Hall Details -->
+        <li ngbNavItem>
+          <a ngbNavLink>Hall Details</a>
+          <ng-template ngbNavContent>
+            <!-- Hall Data -->
+            <form class="border p-4" #form="ngForm">
+              <div class="form-group">
+                <label for="name" class="col-sm-1-12 col-form-label"
+                  >Hall Name</label
+                >
+                <div class="col-sm-1-12 w-100">
+                  <input
+                    type="text"
+                    class="form-control"
+                    readonly
+                    disabled
+                    name="name"
+                    id="name"
+                    [(ngModel)]="hall.name"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="description" class="col-sm-1-12 col-form-label"
+                  >Hall Description</label
+                >
+                <div class="col-sm-1-12 w-100">
+                  <input
+                    type="text"
+                    class="form-control"
+                    readonly
+                    disabled
+                    name="description"
+                    id="description"
+                    [(ngModel)]="hall.description"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="hall_size">Hall Size (No. of persons)</label>
+                <select
+                  class="form-control"
+                  readonly
+                  disabled
+                  name="hall_size"
+                  id="hall_size"
+                  [(ngModel)]="hall.hall_size"
+                  required
+                >
+                  <option value="">Select Hall Size</option>
+                  <option>50</option>
+                  <option>100</option>
+                  <option>150</option>
+                  <option>200</option>
+                  <option>250</option>
+                  <option>300</option>
+                  <option>350</option>
+                  <option>400</option>
+                  <option>450</option>
+                  <option>500</option>
+                  <option>550</option>
+                  <option>600</option>
+                  <option>650</option>
+                  <option>700</option>
+                  <option>750</option>
+                  <option>800</option>
+                  <option>850</option>
+                  <option>900</option>
+                  <option>950</option>
+                  <option>1000</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="event_type">Event Type</label>
+                <select
+                  class="form-control"
+                  readonly
+                  disabled
+                  name="event_type"
+                  id="event_type"
+                  [(ngModel)]="hall.event_type"
+                  required
+                >
+                  <option value="">Select Event Type</option>
+                  <option value="party">Party</option>
+                  <option value="birthday">Birthday</option>
+                  <option value="mariage">Mariage</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="hall_rent">Hall Rent</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  readonly
+                  disabled
+                  name="hall_rent"
+                  minlength="10"
+                  id="hall_rent"
+                  required
+                  [(ngModel)]="hall.hall_rent"
+                />
+              </div>
+              <div class="form-group">
+                <label for="location">Hall Location</label>
+                <select
+                  class="form-control"
+                  readonly
+                  disabled
+                  name="location"
+                  [(ngModel)]="hall.location"
+                  required
+                  id="location"
+                >
+                  <option value="">Select Location</option>
+                  <option value="lahore">Lahore</option>
+                  <option value="karachi">Karachi</option>
+                  <option value="pakistan">Pakistan</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="min_no_of_persons">Min # of Persons</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  readonly
+                  disabled
+                  name="min_no_of_persons"
+                  minlength="10"
+                  id="min_no_of_persons"
+                  required
+                  [(ngModel)]="hall.min_no_of_persons"
+                />
+              </div>
+              <div class="form-group">
+                <label for="hall_open_time">Hall Open Time</label>
+                <input
+                  type="time"
+                  class="form-control"
+                  readonly
+                  disabled
+                  name="hall_open_time"
+                  minlength="10"
+                  id="hall_open_time"
+                  required
+                  [(ngModel)]="hall.open_time"
+                />
+              </div>
+              <div class="form-group">
+                <label for="hall_closed_time">Hall Closed Time</label>
+                <input
+                  type="time"
+                  class="form-control"
+                  readonly
+                  disabled
+                  name="hall_closed_time"
+                  minlength="10"
+                  id="hall_closed_time"
+                  required
+                  [(ngModel)]="hall.closed_time"
+                />
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    readonly
+                    disabled
+                    name="is_available"
+                    id="is_available"
+                    [(ngModel)]="hall.is_available"
+                    value="checkedValue"
+                    checked
+                  />
+                  Is Available (check if hall is currently available)
+                </label>
+              </div>
+            </form>
+            <!-- Hall Gallery -->
+            <div class="card mt-4">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-6">Hall Images</div>
+                  <div class="col-6 text-right">
+                    <button
+                      [disabled]="processingHallGalleryRequest"
+                      class="btn btn-default"
+                      (click)="addHallImageInput.click()"
+                    >
+                      Add Image
+                    </button>
+                    <input
+                      #addHallImageInput
+                      type="file"
+                      accept="image/*"
+                      (change)="onFileSelected($event)"
+                      ngModel
+                      style="position: fixed; top: -1000%; visibility: hidden"
+                      id="profile_image"
+                      name="file"
                     />
-                  </td>
-                  <td>
-                    <button
-                      class="btn btn-danger btn-sm"
-                      (click)="deleteHallImage(image)"
-                    >
-                      Delete
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <ng-container *ngIf="hall.images">
+                  <table class="table" *ngIf="hall.images?.length > 0">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th></th>
+                        <th>Image</th>
+                        <th></th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let image of hall.images; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td colspan="3" class="text-center">
+                          <img
+                            style="margin: auto; width: 100px; height: 100px"
+                            [src]="_backendURL + image.file_url"
+                            [alt]="image.file_name"
+                          />
+                        </td>
+                        <td>
+                          <button
+                            class="btn btn-danger btn-sm"
+                            (click)="deleteHallImage(image)"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </ng-container>
+                <ng-container *ngIf="!hall.images || hall.images?.length < 1">
+                  <div class="text-center">
+                    No Images Found, Try adding some :]
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+            <!-- Hall Food Menu -->
+            <div class="card mt-4">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-6">Hall Food Menu</div>
+                  <div class="col-6 text-right">
+                    <button class="btn btn-default" (click)="addHallFoodItem()">
+                      Add Item
                     </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </ng-container>
-          <ng-container *ngIf="!hallImages || hallImages?.length < 1">
-            <div class="text-center">No Images Found, Try adding some :]</div>
-          </ng-container>
-        </div>
-      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <ng-container *ngIf="hall.food_items">
+                  <table class="table" *ngIf="hall.food_items?.length > 0">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Is Available</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of hall.food_items; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.price | currency }}</td>
+                        <td>{{ item.is_available ? "Yes" : "No" }}</td>
+                        <td colspan="2">
+                          <button
+                            [disabled]="processingHallFoodRequest"
+                            class="btn btn-info btn-sm mr-3"
+                            (click)="editHallFoodItem(item)"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            [disabled]="processingHallFoodRequest"
+                            class="btn btn-danger btn-sm"
+                            (click)="deleteHallFoodItem(item)"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </ng-container>
+                <ng-container
+                  *ngIf="!hall.food_items || hall.food_items?.length < 1"
+                >
+                  <div class="text-center">
+                    No Food Items Found, Try adding some :]
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+            <!-- Hall Feature Items -->
+            <div class="card mt-4">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-6">Hall Feature Items</div>
+                  <div class="col-6 text-right">
+                    <button
+                      class="btn btn-default"
+                      (click)="addHallFeatureItem()"
+                    >
+                      Add Item
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <ng-container *ngIf="hall.features">
+                  <table class="table" *ngIf="hall.features?.length > 0">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Is Available</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of hall.features; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.price | currency }}</td>
+                        <td>{{ item.is_available ? "Yes" : "No" }}</td>
+                        <td colspan="2">
+                          <button
+                            [disabled]="processingHallFeatureRequest"
+                            class="btn btn-info btn-sm mr-3"
+                            (click)="editHallFeatureItem(item)"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            [disabled]="processingHallFeatureRequest"
+                            class="btn btn-danger btn-sm"
+                            (click)="deleteHallFeatureItem(item)"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </ng-container>
+                <ng-container
+                  *ngIf="!hall.features || hall.features?.length < 1"
+                >
+                  <div class="text-center">
+                    No Feature Items Found, Try adding some :]
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+            <!-- Hall Timings -->
+            <div class="card mt-4">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-6">Hall Timing</div>
+                  <div class="col-6 text-right">
+                    <button class="btn btn-default" (click)="addHallTiming()">
+                      Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <ng-container *ngIf="hall.timings">
+                  <table class="table" *ngIf="hall.timings?.length > 0">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of hall.timings; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ item.start_time }}</td>
+                        <td>{{ item.end_time }}</td>
+                        <td colspan="2">
+                          <button
+                            [disabled]="processingHallTimingRequest"
+                            class="btn btn-info btn-sm mr-3"
+                            (click)="editHallTiming(item)"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            [disabled]="processingHallTimingRequest"
+                            class="btn btn-danger btn-sm"
+                            (click)="deleteHallTimingItem(item)"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </ng-container>
+                <ng-container *ngIf="!hall.timings || hall.timings?.length < 1">
+                  <div class="text-center">
+                    No Timing Found, Try adding some :]
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+        <!-- Hall Bookings -->
+        <li ngbNavItem>
+          <a ngbNavLink>Hall Bookings</a>
+          <ng-template ngbNavContent>
+            <!-- Hall Booking Data -->
+            <div class="card mt-4">
+              <div class="card-header">
+                <div class="row">Hall Bookings</div>
+              </div>
+              <div class="card-body">
+                <ng-container *ngIf="hall.bookings">
+                  <table class="table" *ngIf="hall.bookings?.length > 0">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Event Type</th>
+                        <th>No. of Persons</th>
+                        <th>Booking Start Time</th>
+                        <th>Booking End Time</th>
+                        <th colspan="2">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let booking of hall.bookings; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ booking.user.name }}</td>
+                        <td>{{ booking.event_type }}</td>
+                        <td>{{ booking.no_of_persons }}</td>
+                        <td>{{ booking.book_time_from }}</td>
+                        <td>{{ booking.book_time_to }}</td>
+                        <ng-container *ngIf="booking.status == 'pending'">
+                          <td>
+                            <button
+                              class="btn btn-success btn-sm"
+                              (click)="updateHallBooking(booking, 'approved')"
+                            >
+                              Approve
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              class="btn btn-danger btn-sm"
+                              (click)="
+                                updateHallBooking(booking, 'disapproved')
+                              "
+                            >
+                              Reject
+                            </button>
+                          </td>
+                        </ng-container>
+                        <ng-container *ngIf="booking.status != 'pending'">
+                          <td colspan="2">
+                            {{
+                              booking.status == "approved"
+                                ? "Booking Approved"
+                                : "Booking Disapproved"
+                            }}
+                          </td>
+                        </ng-container>
+                      </tr>
+                    </tbody>
+                  </table>
+                </ng-container>
+                <ng-container
+                  *ngIf="!hall.bookings || hall.bookings?.length < 1"
+                >
+                  <div class="text-center">
+                    No Bookings Found, Try coming back later :]
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+        <!-- Hall Feedbacks -->
+        <li ngbNavItem>
+          <a ngbNavLink>Hall Feedbacks</a>
+          <ng-template ngbNavContent>
+            <!-- Hall Booking Data -->
+            <div class="card mt-4">
+              <div class="card-header">
+                <div class="row">Hall Feedbacks</div>
+              </div>
+              <div class="card-body">
+                <ng-container *ngIf="hall.feedbacks">
+                  <table class="table" *ngIf="hall.feedbacks?.length > 0">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Feedback</th>
+                        <th>Rating</th>
+                        <th>Placed At</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let feedback of hall.feedbacks; let i = index"
+                      >
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ feedback.user.name }}</td>
+                        <td>{{ feedback.feedback }}</td>
+                        <td>{{ feedback.rating }}</td>
+                        <td>{{ feedback.created_at }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </ng-container>
+                <ng-container
+                  *ngIf="!hall.feedbacks || hall.feedbacks?.length < 1"
+                >
+                  <div class="text-center">
+                    No Feedbacks Found, Try coming back later :]
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="nav"></div>
     </ng-container>
-    <!-- Hall Food Menu -->
-    <ng-container>
-      <div class="card mt-4">
-        <div class="card-header">
-          <div class="row">
-            <div class="col-6">Hall Food Menu</div>
-            <div class="col-6 text-right">
-              <button class="btn btn-default" (click)="addHallFoodItem()">
-                Add Item
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <ng-container *ngIf="hallFoodItems">
-            <table class="table" *ngIf="hallFoodItems?.length > 0">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Title</th>
-                  <th>Price</th>
-                  <th>Is Available</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of hallFoodItems; let i = index">
-                  <td>{{ i + 1 }}</td>
-                  <td>{{ item.title }}</td>
-                  <td>{{ item.price | currency }}</td>
-                  <td>{{ item.is_available ? "Yes" : "No" }}</td>
-                  <td colspan="2">
-                    <button
-                      [disabled]="processingHallFoodRequest"
-                      class="btn btn-info btn-sm mr-3"
-                      (click)="editHallFoodItem(item)"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      [disabled]="processingHallFoodRequest"
-                      class="btn btn-danger btn-sm"
-                      (click)="deleteHallFoodItem(item)"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </ng-container>
-          <ng-container *ngIf="!hallFoodItems || hallFoodItems?.length < 1">
-            <div class="text-center">
-              No Food Items Found, Try adding some :]
-            </div>
-          </ng-container>
-        </div>
-      </div>
-    </ng-container>
-    <!-- Hall Feature Items -->
-    <ng-container>
-      <div class="card mt-4">
-        <div class="card-header">
-          <div class="row">
-            <div class="col-6">Hall Feature Items</div>
-            <div class="col-6 text-right">
-              <button class="btn btn-default" (click)="addHallFeatureItem()">
-                Add Item
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <ng-container *ngIf="hallFeatureItems">
-            <table class="table" *ngIf="hallFeatureItems?.length > 0">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Title</th>
-                  <th>Description</th>
-                  <th>Price</th>
-                  <th>Is Available</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of hallFeatureItems; let i = index">
-                  <td>{{ i + 1 }}</td>
-                  <td>{{ item.title }}</td>
-                  <td>{{ item.description }}</td>
-                  <td>{{ item.price | currency }}</td>
-                  <td>{{ item.is_available ? "Yes" : "No" }}</td>
-                  <td colspan="2">
-                    <button
-                      [disabled]="processingHallFeatureRequest"
-                      class="btn btn-info btn-sm mr-3"
-                      (click)="editHallFeatureItem(item)"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      [disabled]="processingHallFeatureRequest"
-                      class="btn btn-danger btn-sm"
-                      (click)="deleteHallFeatureItem(item)"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </ng-container>
-          <ng-container
-            *ngIf="!hallFeatureItems || hallFeatureItems?.length < 1"
-          >
-            <div class="text-center">
-              No Feature Items Found, Try adding some :]
-            </div>
-          </ng-container>
-        </div>
-      </div>
-    </ng-container>
+    <!-- If Hall Manager is not approved by admin yet -->
     <div *ngIf="!userData.is_approved" class="text-center">
       <h1>Your account is not approved by admin yet!</h1>
       <p>Approve your account first to add any hall.</p>

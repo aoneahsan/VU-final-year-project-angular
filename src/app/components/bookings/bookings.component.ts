@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SystemService } from 'src/app/services/system.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { BookingDetailInterface } from 'src/app/interfaces/booking/booking-detail.interface';
 
 @Component({
   selector: 'app-bookings',
@@ -12,6 +13,7 @@ export class BookingsComponent implements OnInit, OnDestroy {
 
   _loadingStatus: boolean = false;
   _loadingStatus_Sub: Subscription;
+  bookings: BookingDetailInterface[] = null;
 
   constructor(private _systemService: SystemService, private _authService: AuthService) { }
 
