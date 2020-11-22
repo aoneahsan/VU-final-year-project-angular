@@ -36,7 +36,9 @@
             <div class="col-3 border-right">
               <strong>Status</strong>
             </div>
-            <div class="col-9 pl-4">{{ bookingDetails.status | titlecase }}</div>
+            <div class="col-9 pl-4">
+              {{ bookingDetails.status | titlecase }}
+            </div>
           </div>
         </div>
         <div class="list-group-item list-group-item-action col-12">
@@ -137,7 +139,11 @@
       <!-- Booking Feedback -->
       <div
         class="list-group mb-4"
-        *ngIf="booking_Feedback && !!!bookingDetails.feedback_provided_at && bookingDetails.status == 'approved'"
+        *ngIf="
+          booking_Feedback &&
+          !!bookingDetails.feedback_provided_at &&
+          bookingDetails.status == 'approved'
+        "
       >
         <div class="list-group-item list-group-item-action active">
           <div class="row">
@@ -147,10 +153,17 @@
         <div class="list-group-item list-group-item-action col-12">
           <div class="row">
             <div class="col-3 border-right">
-              <strong>{{ booking_Feedback.rating }}</strong>
+              <strong>Rating: </strong>{{ booking_Feedback.rating }}
+              <ngb-rating [(rate)]="rating" max="1">
+                <ng-template let-fill="fill" let-index="index">
+                  <span class="star" [class.filled]="fill === 100"
+                    >&#9733;</span
+                  >
+                </ng-template>
+              </ngb-rating>
             </div>
             <div class="col-9 pl-4">
-              {{ booking_Feedback.feedback }}
+              <strong>Feedback: </strong>{{ booking_Feedback.feedback }}
             </div>
           </div>
         </div>

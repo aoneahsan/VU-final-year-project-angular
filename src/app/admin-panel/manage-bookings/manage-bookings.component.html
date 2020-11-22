@@ -12,7 +12,7 @@
           <th>Hall Name</th>
           <th>Event Type</th>
           <th># of Persons</th>
-          <th>Booking Time</th>
+          <th>Booking Date</th>
           <th>Menu</th>
           <th>Price</th>
         </tr>
@@ -24,7 +24,7 @@
           <td>{{ booking.hall.name }}</td>
           <td>{{ booking.event_type }}</td>
           <td>{{ booking.no_of_persons }}</td>
-          <td>{{ booking.booking_time }}</td>
+          <td>{{ bookingDateFormat(booking.booking_date) }}</td>
           <td>{{ booking.menu }}</td>
           <td>{{ booking.price | currency }}</td>
         </tr>

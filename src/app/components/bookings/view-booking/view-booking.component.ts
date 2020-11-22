@@ -35,6 +35,7 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
   bookingDate;
   bookingId = null;
   loadingData: boolean = false;
+  rating: number = 1;
 
   timeConvert(time) {
     // Check correct time format and split into components
