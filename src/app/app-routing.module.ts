@@ -12,7 +12,6 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { HomeComponent } from './components/home/home.component';
 import { HallsComponent } from './components/halls/halls.component';
 import { CreateHallComponent } from './components/halls/create-hall/create-hall.component';
-import { CreateBookingComponent } from './components/bookings/create-booking/create-booking.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { SearchHallComponent } from './components/search-hall/search-hall.component';
 import { AdminGuard } from './route-guards/admin/admin-guard.service';
@@ -28,6 +27,7 @@ import { EditHallComponent } from './components/halls/edit-hall/edit-hall.compon
 import { ManageHallManagersComponent } from './admin-panel/manage-hall-managers/manage-hall-managers.component';
 import { ViewHallComponent } from './components/halls/view-hall/view-hall.component';
 import { BookHallComponent } from './components/book-hall/book-hall.component';
+import { ViewBookingComponent } from './components/bookings/view-booking/view-booking.component';
 
 const routes: Routes = [
   {
@@ -76,8 +76,8 @@ const routes: Routes = [
     canActivate: [CustomerGuard]
   },
   {
-    path: 'bookings/create',
-    component: CreateBookingComponent,
+    path: 'bookings/:bookingId',
+    component: ViewBookingComponent,
     canActivate: [CustomerGuard]
   },
   {

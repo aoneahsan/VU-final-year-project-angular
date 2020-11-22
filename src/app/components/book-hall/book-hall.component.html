@@ -1,18 +1,263 @@
 <ng-container *ngIf="!_loadingStatus">
   <app-header></app-header>
   <div class="container py-4">
-    <div class="list-group">
-      <a href="#" class="list-group-item list-group-item-action active"
-        >Active item</a
-      >
-      <a href="#" class="list-group-item list-group-item-action">Item</a>
-      <a href="#" class="list-group-item list-group-item-action disabled"
-        >Disabled item</a
-      >
+    <div class="row mb-4">
+      <div class="col-6">
+        <h2 class="m-0">Book Hall</h2>
+      </div>
+      <div class="col-6 text-right">
+        <strong>Total Booking Price: </strong>{{ totalBookingPrice | currency }}
+      </div>
     </div>
+    <!-- Date selection || activestep = 0 -->
+    <ng-container *ngIf="activeStep === 0">
+      <form class="border p-4" #dateForm="ngForm" (submit)="saveBookingDate()">
+        <div class="form-group">
+          <label for="booking_date" class="col-sm-1-12 col-form-label"
+            >Select Date</label
+          >
+          <div class="col-sm-1-12 w-100">
+            <input
+              type="date"
+              class="form-control"
+              name="booking_date"
+              id="booking_date"
+              [(ngModel)]="bookingSlotData.date"
+              required
+              [min]="tomorrowDate"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-12 p-0 pt-4">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!dateForm.valid || formSubmited"
+              *ngIf="!formSubmited"
+            >
+              Continue
+            </button>
+            <app-loading-spinner *ngIf="formSubmited"></app-loading-spinner>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+    <!-- Time selection || activestep = 1 -->
+    <ng-container *ngIf="activeStep === 1 && hallDetails && hallId">
+      <form
+        class="border p-4"
+        *ngIf="checkIfEmptySlotsAvailable()"
+        #bookingDetailForm="ngForm"
+        (submit)="saveBookingTime()"
+      >
+        <div class="form-group">
+          <label for="booking_time">Time</label>
+          <select
+            type=""
+            class="form-control"
+            name="booking_time"
+            id="booking_time"
+            required
+            [(ngModel)]="bookingSlotData.hall_time_id"
+          >
+            <option value="">Select Time</option>
+            <option
+              *ngFor="let time of hallDetails.timings"
+              [value]="time.id"
+              [disabled]="isTimeSlotBooked(time.id)"
+            >
+              {{
+                "Start: " +
+                  timeConvert(time.start_time) +
+                  "  -  End: " +
+                  timeConvert(time.end_time) +
+                  (isTimeSlotBooked(time.id) ? ' \t [Booked]' : "")
+              }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="row p-0 pt-4">
+            <div class="col-6">
+              <button type="button" class="btn btn-info" (click)="goBack()">
+                Go Back
+              </button>
+            </div>
+            <div class="col-6 text-right">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="!bookingDetailForm.valid || formSubmited"
+                *ngIf="!formSubmited"
+              >
+                Continue
+              </button>
+              <app-loading-spinner *ngIf="formSubmited"></app-loading-spinner>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- No emplty Slot Available -->
+      <div class="row" *ngIf="!checkIfEmptySlotsAvailable()">
+        <div class="col-12 text-center">
+          <h1>No Empty Slot available at selected date</h1>
+          <p>Kindly select any other date, or try any other hall :)</p>
+          <button type="button" class="btn btn-info" (click)="goBack()">
+            Go Back
+          </button>
+        </div>
+      </div>
+    </ng-container>
+    <!-- Booking Detail || activestep = 2 -->
+    <ng-container *ngIf="activeStep === 2 && hallDetails && hallId">
+      <form
+        class="border p-4"
+        #bookingDetailForm="ngForm"
+        (submit)="placeBookingRequest()"
+      >
+        <div class="form-group">
+          <label for="hall_size">No. of persons</label>
+          <select
+            class="form-control"
+            name="hall_size"
+            id="hall_size"
+            [(ngModel)]="bookingData.no_of_persons"
+            required
+          >
+            <option value="">Please Select</option>
+            <option>50</option>
+            <option>100</option>
+            <option>150</option>
+            <option>200</option>
+            <option>250</option>
+            <option>300</option>
+            <option>350</option>
+            <option>400</option>
+            <option>450</option>
+            <option>500</option>
+            <option>550</option>
+            <option>600</option>
+            <option>650</option>
+            <option>700</option>
+            <option>750</option>
+            <option>800</option>
+            <option>850</option>
+            <option>900</option>
+            <option>950</option>
+            <option>1000</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="event_type">Event Type</label>
+          <select
+            class="form-control"
+            name="event_type"
+            id="event_type"
+            [(ngModel)]="bookingData.event_type"
+            required
+          >
+            <option value="">Select Event Type</option>
+            <option>Party</option>
+            <option>Birthday</option>
+            <option>Mariage</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="food_menu">Menu</label>
+          <select
+            class="form-control"
+            multiple
+            name="food_menu"
+            id="food_menu"
+            *ngIf="hallDetails.food_items && hallDetails.food_items.length > 0"
+            [(ngModel)]="bookingData.menu"
+            (change)="updateBookingPrice()"
+          >
+            <option
+              *ngFor="let food of hallDetails.food_items"
+              [value]="food.id"
+            >
+              {{ food.title + "    -    Price: "
+              }}<span>{{ food.price | currency }}</span>
+            </option>
+          </select>
+          <strong
+            class="text-center d-block"
+            *ngIf="hallDetails.food_items && hallDetails.food_items.length < 1"
+            >No Food Menu Added for this Hall.</strong
+          >
+        </div>
+        <div class="form-group">
+          <label for="food_menu">Extra Features</label>
+          <select
+            class="form-control"
+            multiple
+            (change)="updateBookingPrice()"
+            name="food_menu"
+            id="food_menu"
+            [(ngModel)]="bookingData.extra_features"
+            *ngIf="hallDetails.features && hallDetails.features.length > 0"
+          >
+            <option
+              [title]="feature.description"
+              *ngFor="let feature of hallDetails.features"
+              [value]="feature.id"
+            >
+              {{ feature.title + "    -    Price: "
+              }}<span>{{ feature.price | currency }}</span>
+            </option>
+          </select>
+          <strong
+            class="text-center d-block"
+            *ngIf="hallDetails.features && hallDetails.features.length < 1"
+            >No Extra Features Added for this Hall.</strong
+          >
+        </div>
+        <div class="form-group">
+          <div class="col-12 p-0 pt-4"></div>
+          <div class="row p-0 pt-4">
+            <div class="col-6">
+              <button type="button" class="btn btn-info" (click)="goBack()">
+                Go Back
+              </button>
+            </div>
+            <div class="col-6 text-right">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="!bookingDetailForm.valid || formSubmited"
+                *ngIf="!formSubmited"
+              >
+                Submit
+              </button>
+              <app-loading-spinner *ngIf="formSubmited"></app-loading-spinner>
+            </div>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+    <!-- Success Message || activestep = 3 -->
+    <ng-container *ngIf="activeStep === 3">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h1>Booking Placed Successfully.</h1>
+          <button class="btn btn-success" [routerLink]="['/home']">Go To Dashboard</button>
+        </div>
+      </div>
+    </ng-container>
+    <!-- Error Message || activestep = 4 -->
+    <ng-container *ngIf="activeStep === 4">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h1>Error Occured while Placing Booking.</h1>
+          <button class="btn btn-danger" [routerLink]="['/home']">Go To Dashboard</button>
+        </div>
+      </div>
+    </ng-container>
   </div>
   <app-footer></app-footer>
 </ng-container>
-<div style="height: 100vh;" *ngIf="_loadingStatus">
+<div style="height: 100vh" *ngIf="_loadingStatus">
   <app-loading-spinner></app-loading-spinner>
 </div>

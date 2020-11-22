@@ -1,0 +1,73 @@
+<ng-container>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title m-0">Feedback</h2>
+      <button
+        type="button"
+        class="close border-0"
+        data-dismiss="modal"
+        aria-label="Close"
+        (click)="activeModal.close()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div
+      class="modal-body text-muted p-0"
+      *ngIf="!processingHttpRequest && booking"
+    >
+      <form class="border p-4" #form="ngForm" (submit)="onSubmit()">
+        <div class="form-group">
+          <label for="feedback" class="col-sm-1-12 col-form-label"
+            >Feedback</label
+          >
+          <div class="col-sm-1-12 w-100">
+            <input
+              type="text"
+              class="form-control"
+              name="feedback"
+              id="feedback"
+              [(ngModel)]="data.feedback"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="rating">Rating</label>
+          <br />
+          <ngb-rating [(rate)]="data.rating" max="5">
+            <ng-template let-fill="fill" let-index="index">
+              <span class="star" [class.filled]="fill === 100">&#9733;</span>
+            </ng-template>
+          </ngb-rating>
+          <!-- <input
+            class="form-control"
+            name="rating"
+            type="number"
+            min="1"
+            max="5"
+            id="rating"
+            [(ngModel)]="data.rating"
+            required
+          /> -->
+        </div>
+        <div class="form-group">
+          <div class="col-12 p-0">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!form.valid && !processingHttpRequest"
+              (click)="onSubmit()"
+              *ngIf="!processingHttpRequest"
+            >
+              Submit
+            </button>
+            <app-loading-spinner
+              *ngIf="processingHttpRequest"
+            ></app-loading-spinner>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-container>

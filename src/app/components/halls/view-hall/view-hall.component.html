@@ -400,8 +400,8 @@
                     <tbody>
                       <tr *ngFor="let item of hall.timings; let i = index">
                         <td>{{ i + 1 }}</td>
-                        <td>{{ item.start_time }}</td>
-                        <td>{{ item.end_time }}</td>
+                        <td>{{ timeConvert(item.start_time) }}</td>
+                        <td>{{ timeConvert(item.end_time) }}</td>
                         <td colspan="2">
                           <button
                             [disabled]="processingHallTimingRequest"

@@ -12,22 +12,44 @@
               <tr>
                 <th>ID</th>
                 <th>User</th>
+                <th>Hall</th>
                 <th>Event Type</th>
                 <th>No. of Persons</th>
                 <th>Booking Start Time</th>
                 <th>Booking End Time</th>
+                <th>Status</th>
                 <th>Placed At</th>
+                <th colspan="2">Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let booking of bookings; let i = index">
                 <td>{{ i + 1 }}</td>
                 <td>{{ booking.user.name }}</td>
+                <td>{{ booking.hall.name }}</td>
                 <td>{{ booking.event_type }}</td>
                 <td>{{ booking.no_of_persons }}</td>
                 <td>{{ booking.book_time_from }}</td>
                 <td>{{ booking.book_time_to }}</td>
+                <td>{{ booking.status }}</td>
                 <td>{{ booking.created_at | date }}</td>
+                <td>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    [routerLink]="['/bookings/' + booking.id]"
+                  >
+                    View
+                  </button>
+                </td>
+                <td>
+                  <button
+                    *ngIf="!!!booking.feedback_provided_at && booking.status == 'approved'"
+                    class="btn btn-success btn-sm"
+                    (click)="giveFeedback(booking)"
+                  >
+                    Feedback
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>

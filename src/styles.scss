@@ -21,16 +21,6 @@ a {
   font-weight: 400;
 }
 
-h2 {
-  text-align: center;
-  font-size: 16px;
-  font-weight: 600;
-  text-transform: uppercase;
-  display: inline-block;
-  margin: 40px 8px 10px 8px;
-  color: #cccccc;
-}
-
 /* STRUCTURE */
 
 .wrapper {
@@ -120,7 +110,7 @@ input[type="reset"]:active {
 }
 
 input[type="submit"]:disabled {
-    background-color: rgba(247, 65, 65, 0.226);
+  background-color: rgba(247, 65, 65, 0.226);
 }
 
 .input {
@@ -284,11 +274,24 @@ input[type="submit"]:disabled {
   width: 60%;
 }
 
-
 // Custom CSS
 // App Lading Spinner Component CSS
 app-loading-spinner {
   position: relative;
   width: 100vh;
   height: 100vh;
+}
+
+.star {
+  font-size: 1.5rem;
+  color: #b0c4de;
+}
+.filled {
+  color: #e7fc31;
+}
+.bad {
+  color: #deb0b0;
+}
+.filled.bad {
+  color: #ff1e1e;
 }

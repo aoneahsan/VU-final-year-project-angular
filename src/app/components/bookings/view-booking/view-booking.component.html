@@ -1,0 +1,172 @@
+<ng-container *ngIf="!_loadingStatus">
+  <app-header></app-header>
+  <div class="container py-4">
+    <ng-container *ngIf="bookingDetails && !loadingData">
+      <!-- Booking Details Data -->
+      <div class="list-group mb-4" *ngIf="bookingDetails">
+        <div class="list-group-item list-group-item-action active">
+          <div class="row">
+            <div class="col-3"><strong>Booking Detail</strong></div>
+            <div
+              class="col-9 pl-4 text-right"
+              *ngIf="
+                bookingDetails.status == 'approved' &&
+                !!!bookingDetails.feedback_provided_at
+              "
+            >
+              <button
+                class="btn btn-success btn-sm"
+                (click)="giveFeedback(bookingDetails)"
+              >
+                Give Feedback
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="list-group-item list-group-item-action col-12">
+          <div class="row">
+            <div class="col-3 border-right"><strong>Hall Name</strong></div>
+            <div class="col-9 pl-4">
+              {{ bookingDetails.hall.name | titlecase }}
+            </div>
+          </div>
+        </div>
+        <div class="list-group-item list-group-item-action col-12">
+          <div class="row">
+            <div class="col-3 border-right">
+              <strong>Status</strong>
+            </div>
+            <div class="col-9 pl-4">{{ bookingDetails.status | titlecase }}</div>
+          </div>
+        </div>
+        <div class="list-group-item list-group-item-action col-12">
+          <div class="row">
+            <div class="col-3 border-right">
+              <strong>No. of Persons</strong>
+            </div>
+            <div class="col-9 pl-4">{{ bookingDetails.no_of_persons }}</div>
+          </div>
+        </div>
+        <div class="list-group-item list-group-item-action col-12">
+          <div class="row">
+            <div class="col-3 border-right"><strong>Event Type</strong></div>
+            <div class="col-9 pl-4">
+              {{ bookingDetails.event_type | titlecase }}
+            </div>
+          </div>
+        </div>
+        <div class="list-group-item list-group-item-action col-12">
+          <div class="row">
+            <div class="col-3 border-right"><strong>Location</strong></div>
+            <div class="col-9 pl-4">{{ bookingDetails.hall.location }}</div>
+          </div>
+        </div>
+        <div class="list-group-item list-group-item-action col-12">
+          <div class="row">
+            <div class="col-3 border-right"><strong>Booking Date</strong></div>
+            <div class="col-9 pl-4">{{ bookingDate }}</div>
+          </div>
+        </div>
+        <div class="list-group-item list-group-item-action col-12">
+          <div class="row">
+            <div class="col-3 border-right">
+              <strong>Booking Start Time</strong>
+            </div>
+            <div class="col-9 pl-4">
+              {{ timeConvert(bookingDetails.book_time_from) }}
+            </div>
+          </div>
+        </div>
+        <div class="list-group-item list-group-item-action col-12">
+          <div class="row">
+            <div class="col-3 border-right">
+              <strong>Booking End Time</strong>
+            </div>
+            <div class="col-9 pl-4">
+              {{ timeConvert(bookingDetails.book_time_to) }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Booking Menu Data -->
+      <div class="list-group mb-4" *ngIf="food_items && food_items.length > 0">
+        <div class="list-group-item list-group-item-action active">
+          <div class="row">
+            <div class="col-3"><strong>Booking Menu</strong></div>
+          </div>
+        </div>
+        <div
+          class="list-group-item list-group-item-action col-12"
+          *ngFor="let food of food_items"
+        >
+          <div class="row">
+            <div class="col-3 border-right">
+              <strong>{{ food.title | titlecase }}</strong>
+            </div>
+            <div class="col-9 pl-4">
+              {{ food.price | currency }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Booking Extra Features -->
+      <div
+        class="list-group mb-4"
+        *ngIf="extra_features && extra_features.length > 0"
+      >
+        <div class="list-group-item list-group-item-action active">
+          <div class="row">
+            <div class="col-3"><strong>Booking Extra Features</strong></div>
+          </div>
+        </div>
+        <div
+          class="list-group-item list-group-item-action col-12"
+          *ngFor="let feature of extra_features"
+        >
+          <div class="row">
+            <div class="col-3 border-right">
+              <strong>{{ feature.title | titlecase }}</strong>
+            </div>
+            <div class="col-9 pl-4">
+              <p>{{ feature.description }}</p>
+              {{ feature.price | currency }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Booking Feedback -->
+      <div
+        class="list-group mb-4"
+        *ngIf="booking_Feedback && !!!bookingDetails.feedback_provided_at && bookingDetails.status == 'approved'"
+      >
+        <div class="list-group-item list-group-item-action active">
+          <div class="row">
+            <div class="col-3"><strong>Booking Feedback</strong></div>
+          </div>
+        </div>
+        <div class="list-group-item list-group-item-action col-12">
+          <div class="row">
+            <div class="col-3 border-right">
+              <strong>{{ booking_Feedback.rating }}</strong>
+            </div>
+            <div class="col-9 pl-4">
+              {{ booking_Feedback.feedback }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- If bookingDetails Manager is not approved by admin yet -->
+    <div *ngIf="!bookingDetails && !loadingData" class="text-center">
+      <h1>Not Found!</h1>
+      <p>No data found for the requested booking id :/</p>
+    </div>
+    <div style="height: 100vh" *ngIf="loadingData">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</ng-container>
+<div style="height: 100vh" *ngIf="_loadingStatus">
+  <app-loading-spinner></app-loading-spinner>
+</div>
